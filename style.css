@@ -1,0 +1,105 @@
+
+body {
+    margin: 0;
+    font-family: sans-serif;
+    background-color: #f9f9f9;
+    color: #111;
+}
+nav {
+    background-color: #003c7e;
+    color: white;
+    padding: 10px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+nav ul {
+    list-style: none;
+    display: flex;
+    gap: 15px;
+    padding: 0;
+}
+nav a {
+    color: white;
+    text-decoration: none;
+}
+nav a.active {
+    border-bottom: 2px solid white;
+}
+.logo {
+    font-weight: bold;
+}
+main {
+    display: flex;
+}
+.sidebar {
+    width: 80px;
+    background-color: white;
+    border-right: 1px solid #ccc;
+}
+.sidebar img {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+.content {
+    flex: 1;
+    padding: 40px 20px;
+    max-width: 1000px;
+}
+.gallery {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+.gallery img {
+    width: 300px;
+    height: auto;
+}
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    max-width: 400px;
+}
+input, textarea, select {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+button {
+    background-color: #003c7e;
+    color: white;
+    border: none;
+    padding: 10px;
+    border-radius: 4px;
+}
+footer {
+    background-color: #002d5d;
+    color: white;
+    text-align: center;
+    padding: 20px;
+}
+.btn {
+    background-color: #003c7e;
+    color: white;
+    padding: 10px 20px;
+    text-decoration: none;
+    display: inline-block;
+    margin-top: 20px;
+    border-radius: 5px;
+}
+.choreographers {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+.profile {
+    text-align: center;
+    max-width: 200px;
+}
+.profile img {
+    width: 100%;
+    border-radius: 10px;
+}
