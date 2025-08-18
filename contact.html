@@ -47,16 +47,25 @@
     .sidebar-right { right: 0; transform: scaleX(-1); }
 
     /* Основно съдържание */
-    main {
-      max-width: 800px;
-      margin: 100px auto 40px;
-      padding: 20px;
-      background: #fff;
-      border-radius: 10px;
-      box-shadow: 0 0 10px rgba(0,0,0,0.1);
-      position: relative;
-      z-index: 1500;
-    }
+   <main>
+  <div class="form-header">
+    <img src="header-image.jpg" alt="Танци" class="header-img">
+    <div class="header-text">Свържи се с нас</div>
+  </div>
+
+  <form action="submit_form.php" method="post">
+    <input type="text" name="name" placeholder="Име" required>
+    <input type="email" name="email" placeholder="Имейл" required>
+    <select name="level" required>
+      <option value="">Избери ниво</option>
+      <option value="beginner">Начинаещи</option>
+      <option value="intermediate">Средно ниво</option>
+      <option value="kids">Деца</option>
+    </select>
+    <textarea name="message" placeholder="Допълнително съобщение"></textarea>
+    <button type="submit">Изпрати</button>
+  </form>
+</main>
     h2 { color: #004a99; }
 
     form {
@@ -89,6 +98,28 @@
       padding: 20px;
       margin-top: 40px;
     }
+    .form-header {
+  position: relative;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.header-img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  border-radius: 10px;
+}
+
+.header-text {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: white;
+  font-size: 2em;
+  font-weight: bold;
+  text-shadow: 1px 1px 5px rgba(0,0,0,0.7);
   </style>
 </head>
 <body>
