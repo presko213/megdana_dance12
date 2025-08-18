@@ -82,6 +82,19 @@
       transform: scaleX(-1);
     }
 
+    .sidebar-left,
+.sidebar-right {
+  width: 150px;
+  background-image: url('12.png');
+  background-repeat: repeat-y;
+  background-position: center;
+  background-size: 500px auto;
+  position: absolute;
+  top: 60px;
+  height: calc(100% - 60px - 80px); /* 60px header + ~80px footer */
+  z-index: 1000;
+}
+
     /* Основно съдържание */
     main {
       max-width: 900px;
