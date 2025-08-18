@@ -1,28 +1,86 @@
 <!DOCTYPE html>
 <html lang="bg">
 <head>
-    <meta charset="UTF-8">
-    <title>Контакти – Мегданъ</title>
-    <link rel="stylesheet" href="style.css">
-</head>
-<body>
-<header>
-    <nav>
-        <div class="logo">Мегданъ</div>
-        <ul>
-            <li><a href="index.html" >Начало</a></li>
-            <li><a href="about.html" >За нас</a></li>
-            <li><a href="classes.html" >Курсове</a></li>
-            <li><a href="gallery.html" >Галерия</a></li>
-            <li><a href="contact.html" class="active">Контакти</a></li>
-        </ul>
-    </nav>
-</header>
-<main>
-    
-<aside class="sidebar">
-    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/19/Bulgarian_embroidery_motif.svg/1280px-Bulgarian_embroidery_motif.svg.png" alt="Българска шевица">
-</aside>
+  <meta charset="UTF-8">
+  <title>Начало – Мегданъ</title>
+  <style>
+    /* Нулиране на отстоянията */
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #f9f9f9;
+    }
+
+    /* Навигация фиксирана отгоре */
+    header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 60px;
+      background: #004a99;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 20px;
+      z-index: 3000;
+    }
+
+    header .logo {
+      color: white;
+      font-weight: bold;
+      font-size: 20px;
+    }
+
+    header nav ul {
+      margin: 0;
+      padding: 0;
+      display: flex;
+      list-style: none;
+    }
+
+    header nav ul li {
+      margin-left: 20px;
+    }
+
+    header nav ul li a {
+      color: white;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    header nav ul li a.active {
+      text-decoration: underline;
+    }
+
+    /* Лява шевица */
+    .sidebar-left {
+      width: 150px;
+      background-image: url('12.png');
+      background-repeat: repeat-y;
+      background-position: center;
+      background-size: 500px auto;
+      position: fixed;
+      top: 60px;
+      bottom: 0;
+      left: 0;
+      z-index: 1000;
+    }
+
+    /* Дясна шевица */
+    .sidebar-right {
+      width: 150px;
+      background-image: url('12.png');
+      background-repeat: repeat-y;
+      background-position: center;
+      background-size: 500px auto;
+      position: fixed;
+      top: 60px;
+      bottom: 0;
+      right: 0;
+      z-index: 1000;
+      transform: scaleX(-1);
+    }
 
     <section class="content">
         
