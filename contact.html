@@ -4,19 +4,26 @@
   <meta charset="UTF-8">
   <title>Контакти – Мегданъ</title>
   <style>
-    body {
+    :root{
+      --header-h: 60px;
+      --footer-h: 80px;
+      --sidebar-w: 150px;
+    }
+
+    * { box-sizing: border-box; }
+
+    html, body {
+      height: 100%;
       margin: 0;
       font-family: Arial, sans-serif;
       background: #f9f9f9;
     }
 
-    /* Навигация */
+    /* Навигация (фиксирана) */
     header {
       position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      height: 60px;
+      top: 0; left: 0; right: 0;
+      height: var(--header-h);
       background: #004a99;
       display: flex;
       align-items: center;
@@ -30,32 +37,40 @@
     header nav ul li a { color: white; text-decoration: none; font-weight: bold; }
     header nav ul li a.active { text-decoration: underline; }
 
-    /* Контейнер за съдържание + шевици */
+    /* Обвивка за съдържанието + шевици
+       - минимална височина = височина на екрана - височина на футъра
+       - padding-top избутва съдържанието под фиксирания header */
     .content-wrapper {
       position: relative;
-      padding-bottom: 40px; /* малко разстояние над футъра */
+      min-height: calc(100vh - var(--footer-h));
+      padding-top: calc(var(--header-h) + 40px); /* 40px въздух под хедъра */
+      padding-bottom: 40px; /* малко място над футъра */
     }
 
-    /* Странични шевици */
+    /* Странични шевици – ограничени в .content-wrapper,
+       започват под хедъра и свършват точно преди футъра */
     .sidebar-left,
     .sidebar-right {
-      width: 150px;
+      position: absolute;
+      top: var(--header-h);
+      bottom: 0;
+      width: var(--sidebar-w);
       background-image: url('12.png');
       background-repeat: repeat-y;
-      background-position: center;
-      background-size: 500px auto;
-      position: absolute;
-      top: 60px;   /* започват под header */
-      bottom: 0;   /* завършват преди footer */
+      background-position: center top;
+      background-size: calc(var(--sidebar-w) - 10px) auto; /* по-остра графика */
       z-index: 1000;
+      image-rendering: crisp-edges;
+      image-rendering: -webkit-optimize-contrast;
+      image-rendering: pixelated;
     }
-    .sidebar-left { left: 0; }
+    .sidebar-left  { left: 0; }
     .sidebar-right { right: 0; transform: scaleX(-1); }
 
     /* Основно съдържание */
     main {
       max-width: 800px;
-      margin: 100px auto 40px;
+      margin: 0 auto 40px;
       padding: 20px;
       background: #fff;
       border-radius: 10px;
@@ -63,66 +78,46 @@
       position: relative;
       z-index: 1500;
     }
-    h2 { color: #004a99; }
 
     /* Хедър със снимка над формата */
-    .form-header {
-      position: relative;
-      text-align: center;
-      margin-bottom: 20px;
-    }
-    .header-img {
-      width: 100%;
-      height: 200px;
-      object-fit: cover;
-      border-radius: 10px;
-    }
+    .form-header { position: relative; text-align: center; margin-bottom: 20px; }
+    .header-img { width: 100%; height: 200px; object-fit: cover; border-radius: 10px; }
     .header-text {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      color: white;
-      font-size: 2em;
-      font-weight: bold;
+      position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+      color: #fff; font-size: 2em; font-weight: bold;
       text-shadow: 1px 1px 5px rgba(0,0,0,0.7);
     }
 
     /* Форма */
-    form {
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-      margin-top: 20px;
-    }
+    form { display: flex; flex-direction: column; gap: 10px; margin-top: 20px; }
     form input, form select, form textarea {
-      padding: 10px;
-      border: 1px solid #ccc;
-      border-radius: 5px;
-      font-size: 1em;
+      padding: 10px; border: 1px solid #ccc; border-radius: 5px; font-size: 1em;
     }
     form button {
-      padding: 10px;
-      border: none;
-      background: #004a99;
-      color: white;
-      border-radius: 5px;
-      font-size: 1em;
-      cursor: pointer;
+      padding: 10px; border: none; background: #004a99; color: #fff;
+      border-radius: 5px; font-size: 1em; cursor: pointer;
     }
     form button:hover { background: #003366; }
 
-    /* Футър */
+    /* Футър – „sticky“, но не fixed: винаги долу, вижда се само в края */
     footer {
-      text-align: center;
+      height: var(--footer-h);
       background: #004a99;
       color: #fff;
-      padding: 20px;
-      margin-top: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0 20px;
+    }
+
+    /* Малък „guard“ за много ниски екрани – да не се застъпва хедър/мейн */
+    @media (max-height: 540px) {
+      .content-wrapper { padding-top: calc(var(--header-h) + 20px); }
     }
   </style>
 </head>
 <body>
+
 <header>
   <div class="logo">Мегданъ</div>
   <nav>
@@ -146,6 +141,8 @@
       <div class="header-text">Свържи се с нас</div>
     </div>
 
+    <p>Имейл: megdan@dance.bg<br>Телефон: 0888 123 456</p>
+
     <form action="submit_form.php" method="post">
       <input type="text" name="name" placeholder="Име" required>
       <input type="email" name="email" placeholder="Имейл" required>
@@ -164,5 +161,6 @@
 <footer>
   <p>&copy; 2025 Мегданъ. Всички права запазени.</p>
 </footer>
+
 </body>
 </html>
