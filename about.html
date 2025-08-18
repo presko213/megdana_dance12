@@ -4,6 +4,86 @@
     <meta charset="UTF-8">
     <title>За нас – Мегданъ</title>
     <link rel="stylesheet" href="style.css">
+    <style>
+    /* Нулиране на отстоянията */
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #f9f9f9;
+    }
+
+    /* Навигация фиксирана отгоре */
+    header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 60px;
+      background: #004a99;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 20px;
+      z-index: 3000;
+    }
+
+    header .logo {
+      color: white;
+      font-weight: bold;
+      font-size: 20px;
+    }
+
+    header nav ul {
+      margin: 0;
+      padding: 0;
+      display: flex;
+      list-style: none;
+    }
+
+    header nav ul li {
+      margin-left: 20px;
+    }
+
+    header nav ul li a {
+      color: white;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    header nav ul li a.active {
+      text-decoration: underline;
+    }
+
+    /* Лява шевица */
+    .sidebar-left {
+      width: 150px;
+      background-image: url('12.png');
+      background-repeat: repeat-y;
+      background-position: center;
+      background-size: 500px auto;
+      position: fixed;
+      top: 60px;
+      bottom: 0;
+      left: 0;
+      z-index: 0;
+    }
+
+    /* Дясна шевица */
+    .sidebar-right {
+      width: 150px;
+      background-image: url('12.png');
+      background-repeat: repeat-y;
+      background-position: center;
+      background-size: 500px auto;
+      position: fixed;
+      top: 60px;
+      bottom: 0;
+      right: 0;
+      z-index: 0;
+      transform: scaleX(-1);
+    }
+
+</style>
 </head>
 <body>
 <header>
