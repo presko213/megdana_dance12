@@ -4,7 +4,37 @@
     <meta charset="UTF-8">
     <title>Начало – Мегданъ</title>
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style.css">
+  <style>
+    /* Добавих CSS за страничните ленти */
 </head>
+       .sidebar-left {
+      width: 150px;
+      background-image: url('12.png');
+      background-repeat: repeat-y;
+      background-position: center;
+      background-size: 500px auto;
+      position: fixed;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      z-index: 2000;
+    }
+
+    /* Дясна лента */
+    .sidebar-right {
+      width: 150px;
+      background-image: url('12.png');
+      background-repeat: repeat-y;
+      background-position: center;
+      background-size: 500px auto;
+      position: fixed;
+      top: 0;
+      bottom: 0;
+      right: 0;
+      z-index: 2000;
+      transform: scaleX(-1); /* Обръщане на изображението за огледален ефект */
+    }
 <body>
 <header>
     <nav>
