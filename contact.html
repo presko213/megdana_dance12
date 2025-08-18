@@ -2,16 +2,15 @@
 <html lang="bg">
 <head>
   <meta charset="UTF-8">
-  <title>Начало – Мегданъ</title>
+  <title>Контакти – Мегданъ</title>
   <style>
-    /* Нулиране на отстоянията */
     body {
       margin: 0;
       font-family: Arial, sans-serif;
       background: #f9f9f9;
     }
 
-    /* Навигация фиксирана отгоре */
+    /* Навигация */
     header {
       position: fixed;
       top: 0;
@@ -25,49 +24,14 @@
       padding: 0 20px;
       z-index: 3000;
     }
+    header .logo { color: white; font-weight: bold; font-size: 20px; }
+    header nav ul { margin: 0; padding: 0; display: flex; list-style: none; }
+    header nav ul li { margin-left: 20px; }
+    header nav ul li a { color: white; text-decoration: none; font-weight: bold; }
+    header nav ul li a.active { text-decoration: underline; }
 
-    header .logo {
-      color: white;
-      font-weight: bold;
-      font-size: 20px;
-    }
-
-    header nav ul {
-      margin: 0;
-      padding: 0;
-      display: flex;
-      list-style: none;
-    }
-
-    header nav ul li {
-      margin-left: 20px;
-    }
-
-    header nav ul li a {
-      color: white;
-      text-decoration: none;
-      font-weight: bold;
-    }
-
-    header nav ul li a.active {
-      text-decoration: underline;
-    }
-
-    /* Лява шевица */
-    .sidebar-left {
-      width: 150px;
-      background-image: url('12.png');
-      background-repeat: repeat-y;
-      background-position: center;
-      background-size: 500px auto;
-      position: fixed;
-      top: 60px;
-      bottom: 0;
-      left: 0;
-      z-index: 1000;
-    }
-
-    /* Дясна шевица */
+    /* Странични шевици */
+    .sidebar-left,
     .sidebar-right {
       width: 150px;
       background-image: url('12.png');
@@ -77,33 +41,94 @@
       position: fixed;
       top: 60px;
       bottom: 0;
-      right: 0;
       z-index: 1000;
-      transform: scaleX(-1);
     }
+    .sidebar-left { left: 0; }
+    .sidebar-right { right: 0; transform: scaleX(-1); }
 
-    
-        <h2>Свържи се с нас</h2>
-        <p>Имейл: megdan@dance.bg</p>
-        <p>Телефон: 0888 123 456</p>
-        <form>
-            <input type="text" placeholder="Име" required>
-            <input type="email" placeholder="Имейл" required>
-            <select required>
-                <option value="">Избери ниво</option>
-                <option value="beginner">Начинаещи</option>
-                <option value="intermediate">Средно ниво</option>
-                <option value="kids">Деца</option>
-            </select>
-            <textarea placeholder="Допълнително съобщение"></textarea>
-            <button type="submit">Изпрати</button>
-        </form>
-    
-    </section>
+    /* Основно съдържание */
+    main {
+      max-width: 800px;
+      margin: 100px auto 40px;
+      padding: 20px;
+      background: #fff;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      position: relative;
+      z-index: 1500;
+    }
+    h2 { color: #004a99; }
+
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-top: 20px;
+    }
+    form input, form select, form textarea {
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      font-size: 1em;
+    }
+    form button {
+      padding: 10px;
+      border: none;
+      background: #004a99;
+      color: white;
+      border-radius: 5px;
+      font-size: 1em;
+      cursor: pointer;
+    }
+    form button:hover { background: #003366; }
+
+    footer {
+      text-align: center;
+      background: #004a99;
+      color: #fff;
+      padding: 20px;
+      margin-top: 40px;
+    }
+  </style>
+</head>
+<body>
+<header>
+  <div class="logo">Мегданъ</div>
+  <nav>
+    <ul>
+      <li><a href="index.html">Начало</a></li>
+      <li><a href="about.html">За нас</a></li>
+      <li><a href="classes.html">Курсове</a></li>
+      <li><a href="gallery.html">Галерия</a></li>
+      <li><a href="contact.html" class="active">Контакти</a></li>
+    </ul>
+  </nav>
+</header>
+
+<div class="sidebar-left"></div>
+<div class="sidebar-right"></div>
+
+<main>
+  <h2>Свържи се с нас</h2>
+  <p>Имейл: megdan@dance.bg</p>
+  <p>Телефон: 0888 123 456</p>
+
+  <form>
+    <input type="text" placeholder="Име" required>
+    <input type="email" placeholder="Имейл" required>
+    <select required>
+      <option value="">Избери ниво</option>
+      <option value="beginner">Начинаещи</option>
+      <option value="intermediate">Средно ниво</option>
+      <option value="kids">Деца</option>
+    </select>
+    <textarea placeholder="Допълнително съобщение"></textarea>
+    <button type="submit">Изпрати</button>
+  </form>
 </main>
+
 <footer>
-    <p>&copy; 2025 Мегданъ. Всички права запазени.</p>
+  <p>&copy; 2025 Мегданъ. Всички права запазени.</p>
 </footer>
-      </style>
 </body>
 </html>
