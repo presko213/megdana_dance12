@@ -1,69 +1,137 @@
 <!DOCTYPE html>
 <html lang="bg">
 <head>
-    <meta charset="UTF-8">
-    <title>Начало – Мегданъ</title>
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <title>Начало – Мегданъ</title>
+  <style>
+    /* Нулиране на отстоянията */
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #f9f9f9;
+    }
 
-    <style>
-        /* Лява лента */
-        .sidebar-left {
-            width: 150px;
-            background-image: url('12.png');
-            background-repeat: repeat-y;
-            background-position: center;
-            background-size: 500px auto;
-            position: fixed;
-            top: 0;
-            bottom: 0;
-            left: 0;
-            z-index: 2000;
-        }
+    /* Навигация фиксирана отгоре */
+    header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 60px;
+      background: #004a99;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 20px;
+      z-index: 3000;
+    }
 
-        /* Дясна лента */
-        .sidebar-right {
-            width: 150px;
-            background-image: url('12.png');
-            background-repeat: repeat-y;
-            background-position: center;
-            background-size: 500px auto;
-            position: fixed;
-            top: 0;
-            bottom: 0;
-            right: 0;
-            z-index: 2000;
-            transform: scaleX(-1); /* огледален ефект */
-        }
-    </style>
+    header .logo {
+      color: white;
+      font-weight: bold;
+      font-size: 20px;
+    }
+
+    header nav ul {
+      margin: 0;
+      padding: 0;
+      display: flex;
+      list-style: none;
+    }
+
+    header nav ul li {
+      margin-left: 20px;
+    }
+
+    header nav ul li a {
+      color: white;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    header nav ul li a.active {
+      text-decoration: underline;
+    }
+
+    /* Лява шевица */
+    .sidebar-left {
+      width: 150px;
+      background-image: url('12.png');
+      background-repeat: repeat-y;
+      background-position: center;
+      background-size: 500px auto;
+      position: fixed;
+      top: 60px;
+      bottom: 0;
+      left: 0;
+      z-index: 1000;
+    }
+
+    /* Дясна шевица */
+    .sidebar-right {
+      width: 150px;
+      background-image: url('12.png');
+      background-repeat: repeat-y;
+      background-position: center;
+      background-size: 500px auto;
+      position: fixed;
+      top: 60px;
+      bottom: 0;
+      right: 0;
+      z-index: 1000;
+      transform: scaleX(-1);
+    }
+
+    /* Основно съдържание */
+    main {
+      max-width: 900px;
+      margin: 100px auto 40px; /* отстояние отгоре заради header */
+      padding: 20px;
+      background: white;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      position: relative;
+      z-index: 1500;
+    }
+
+    footer {
+      text-align: center;
+      padding: 20px;
+      background: #004a99;
+      color: white;
+      margin-top: 20px;
+    }
+  </style>
 </head>
 <body>
+
 <header>
-    <nav>
-        <div class="logo">Мегданъ</div>
-        <ul>
-            <li><a href="index.html" class="active">Начало</a></li>
-            <li><a href="about.html">За нас</a></li>
-            <li><a href="classes.html">Курсове</a></li>
-            <li><a href="gallery.html">Галерия</a></li>
-            <li><a href="contact.html">Контакти</a></li>
-        </ul>
-    </nav>
+  <div class="logo">Мегданъ</div>
+  <nav>
+    <ul>
+      <li><a href="index.html" class="active">Начало</a></li>
+      <li><a href="about.html">За нас</a></li>
+      <li><a href="classes.html">Курсове</a></li>
+      <li><a href="gallery.html">Галерия</a></li>
+      <li><a href="contact.html">Контакти</a></li>
+    </ul>
+  </nav>
 </header>
 
-<!-- Странични ленти -->
+<!-- Шевици -->
 <div class="sidebar-left"></div>
 <div class="sidebar-right"></div>
 
+<!-- Съдържание -->
 <main>
-    <section class="content">
-        <h1>Добре дошли в “Мегданъ”</h1>
-        <p>Школа за български народни танци – мястото, където традицията оживява!</p>
-        <a class="btn" href="contact.html">Запиши се</a>
-    </section>
+  <h1>Добре дошли в “Мегданъ”</h1>
+  <p>Школа за български народни танци – мястото, където традицията оживява!</p>
+  <a href="contact.html">Запиши се</a>
 </main>
 
 <footer>
-    <p>&copy; 2025 Мегданъ. Всички права запазени.</p>
+  <p>&copy; 2025 Мегданъ. Всички права запазени.</p>
 </footer>
+
 </body>
 </html>
