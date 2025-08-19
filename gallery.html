@@ -147,43 +147,44 @@
   </div>
 
   <script>
-    // ✅ Използвай САМО Folder ID, не целия URL
-    // Пример за URL: https://drive.google.com/drive/folders/1g5-Jb3RIkv_-e543bV9RgYfTdslwH321
-    // Вземаш само "1g5-Jb3RIkv_-e543bV9RgYfTdslwH321"
-    const FOLDER_ID = "1g5-Jb3RIkv_-e543bV9RgYfTdslwH321";
+  const FOLDER_ID = "1g5-Jb3RIkv_-e543bV9RgYfTdslwH321";
+  const API_KEY   = "AIzaSyBtctAzsAEuQcqZdARVCsLZ-1JeyuoM4o4";
 
-    const API_KEY = "AIzaSyBtctAzsAEuQcqZdARVCsLZ-1JeyuoM4o4";
+  const query = encodeURIComponent(`'${FOLDER_ID}' in parents and mimeType contains 'image/' and trashed = false`);
+  const fields = encodeURIComponent('files(id,name,mimeType,webContentLink,webViewLink)');
+  const url = `https://www.googleapis.com/drive/v3/files?q=${query}&fields=${fields}&key=${API_KEY}`;
 
-    // Сглобяваме заявката – само изображения и не-трашнати
-    const query = encodeURIComponent(`'${FOLDER_ID}' in parents and mimeType contains 'image/' and trashed = false`);
-    const fields = encodeURIComponent('files(id,name,mimeType)');
-    const url = `https://www.googleapis.com/drive/v3/files?q=${query}&fields=${fields}&key=${API_KEY}`;
+  const galleryEl = document.getElementById('gallery');
+  const msgEl = document.getElementById('msg');
 
-    const galleryEl = document.getElementById('gallery');
-    const msgEl = document.getElementById('msg');
+  fetch(url)
+    .then(response => response.json())
+    .then(data => {
+      if (!data.files || !data.files.length) {
+        msgEl.textContent = "Няма намерени снимки в папката.";
+        return;
+      }
+      msgEl.remove();
+      data.files.forEach(file => {
+        const item = document.createElement('div');
+        item.className = 'gallery-item';
 
-    fetch(url)
-      .then(r => r.json())
-      .then(data => {
-        if (!data.files || !data.files.length) {
-          msgEl.textContent = "Няма намерени снимки в папката.";
-          return;
-        }
-        msgEl.remove();
-        data.files.forEach(file => {
-          const item = document.createElement('div');
-          item.className = 'gallery-item';
-          item.innerHTML = `
-            <img src="https://drive.google.com/uc?id=${file.id}" alt="${file.name}">
-            <p>${file.name.replace(/\.[^/.]+$/, "")}</p>
-          `;
-          galleryEl.appendChild(item);
-        });
-      })
-      .catch(err => {
-        console.error(err);
-        msgEl.textContent = "Грешка при зареждането. Провери API ключа, Folder ID и правата за споделяне.";
+        // Пробваме uc?id=, ако не – ползваме webContentLink
+        const imgUrl = `https://drive.google.com/uc?id=${file.id}`;
+        // алтернатива: const imgUrl = file.webContentLink;
+
+        item.innerHTML = `
+          <img src="${imgUrl}" alt="${file.name}">
+          <p>${file.name.replace(/\.[^/.]+$/, "")}</p>
+        `;
+        galleryEl.appendChild(item);
       });
-  </script>
+    })
+    .catch(err => {
+      console.error(err);
+      msgEl.textContent = "Грешка при зареждането. Провери API ключа, Folder ID и правата за споделяне.";
+    });
+</script>
+
 </body>
 </html>
