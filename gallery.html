@@ -219,16 +219,19 @@
     const lightboxPrev  = document.querySelector(".lightbox-prev");
     const lightboxNext  = document.querySelector(".lightbox-next");
 
-    let images = []; // масив от {primary, uc, thumb, title}
+    // За слайдване
+    let images = []; // масив от обекти {primary, uc, thumb, title}
     let currentIndex = 0;
 
+    // Генерира най-стабилните URL-и за показване
     function buildUrls(file) {
-      const primary = `https://www.googleapis.com/drive/v3/files/${file.id}?alt=media&key=${API_KEY}`;
-      const uc      = `https://drive.google.com/uc?export=view&id=${file.id}`;
-      const thumb   = file.thumbnailLink || "";
+      const primary = `https://www.googleapis.com/drive/v3/files/${file.id}?alt=media&key=${API_KEY}`; // директен байтов поток
+      const uc      = `https://drive.google.com/uc?export=view&id=${file.id}`;                         // фолбек
+      const thumb   = file.thumbnailLink || "";                                                         // последен фолбек (малък)
       return { primary, uc, thumb, title: file.name };
     }
 
+    // Зареждаме списъка
     fetch(url)
       .then(r => r.json())
       .then(data => {
@@ -251,6 +254,7 @@
           imgEl.referrerPolicy = "no-referrer";
           imgEl.alt = file.name;
 
+          // 1) опит с alt=media, 2) фолбек към uc?export=view, 3) фолбек към thumbnailLink
           imgEl.src = primary;
           imgEl.onerror = () => {
             imgEl.onerror = () => {
@@ -309,4 +313,11 @@
     // Клавиатура
     document.addEventListener("keydown", (e) => {
       if (lightbox.style.display === "block") {
-        if (e.key === "ArrowLeft")  { currentIndex = (currentIndex - 1 + images.length)
+        if (e.key === "ArrowLeft")  { currentIndex = (currentIndex - 1 + images.length) % images.length; showCurrent(); }
+        if (e.key === "ArrowRight") { currentIndex = (currentIndex + 1) % images.length; showCurrent(); }
+        if (e.key === "Escape")     { lightbox.style.display = "none"; }
+      }
+    });
+  </script>
+</body>
+</html>
