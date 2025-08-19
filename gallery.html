@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!DOCTYPE html> 
 <html lang="bg">
 <head>
   <meta charset="UTF-8">
@@ -11,17 +11,16 @@
       margin: 0;
       font-family: Arial, sans-serif;
       background: #f9f9f9;
-      position: relative; /* за абсолютните шевици */
+      position: relative;
     }
 
-    /* Страница-обвивка за "стикнат" футър */
     .page {
       min-height: 100vh;
       display: flex;
       flex-direction: column;
     }
 
-    /* Фиксирана навигация отгоре */
+    /* Хедър */
     header {
       position: fixed;
       top: 0; left: 0; right: 0;
@@ -38,25 +37,25 @@
     header nav a { color: #fff; text-decoration: none; font-weight: bold; }
     header nav a.active, header nav a:hover { text-decoration: underline; }
 
-    /* Шевици – зад съдържанието и футъра */
+    /* Шевици */
     .sidebar-left, .sidebar-right {
       width: 150px;
-      background-image: url('12.png'); /* увери се, че 12.png е в същата папка */
+      background-image: url('12.png');
       background-repeat: repeat-y;
       background-position: center;
       background-size: 500px auto;
-      position: absolute;     /* ВАЖНО: absolute, не fixed */
-      top: 60px;              /* под хедъра */
-      bottom: 0;              /* до дъното на страницата (ще расте с височината на body) */
-      z-index: 0;             /* под основното съдържание и футъра */
+      position: absolute;
+      top: 60px;
+      bottom: 0;
+      z-index: 0;
     }
     .sidebar-left  { left: 0; }
     .sidebar-right { right: 0; transform: scaleX(-1); }
 
     /* Основно съдържание */
     main {
-      flex: 1; /* бута футъра надолу при малко съдържание */
-      margin: 80px 170px 30px; /* място за хедър (80px) и за шевиците (ляво/дясно по 150px + 20px въздух) */
+      flex: 1;
+      margin: 80px 170px 30px;
       position: relative;
       z-index: 1;
     }
@@ -89,23 +88,78 @@
       overflow: hidden;
       text-align: center;
       transition: transform .2s;
+      cursor: pointer;
     }
     .gallery-item:hover { transform: scale(1.03); }
     .gallery-item img { width: 100%; height: auto; display: block; }
     .gallery-item p { padding: 10px; font-size: 14px; color: #333; }
 
-    /* Съобщения/грешки */
     .notice { text-align: center; color: #666; padding: 10px 0; }
 
-    /* Футър – стои долу */
+    /* Футър */
     footer {
       background: #004a99;
       color: #fff;
       text-align: center;
       padding: 15px;
       position: relative;
-      z-index: 1; /* над шевиците */
+      z-index: 1;
     }
+
+    /* Lightbox стилове */
+    .lightbox {
+      display: none;
+      position: fixed;
+      z-index: 5000;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      overflow: auto;
+      background: rgba(0,0,0,0.9);
+    }
+
+    .lightbox-content {
+      margin: 5% auto;
+      display: block;
+      max-width: 90%;
+      max-height: 80vh;
+      border-radius: 10px;
+      box-shadow: 0 0 20px #000;
+    }
+
+    .lightbox-close {
+      position: absolute;
+      top: 20px;
+      right: 35px;
+      color: #fff;
+      font-size: 40px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+    .lightbox-close:hover {
+      color: #ccc;
+    }
+
+    /* Стрелки */
+    .lightbox-prev, .lightbox-next {
+      cursor: pointer;
+      position: absolute;
+      top: 50%;
+      width: auto;
+      padding: 16px;
+      margin-top: -50px;
+      color: #fff;
+      font-weight: bold;
+      font-size: 40px;
+      transition: 0.3s;
+      user-select: none;
+    }
+
+    .lightbox-prev { left: 20px; }
+    .lightbox-next { right: 20px; }
+    .lightbox-prev:hover, .lightbox-next:hover { color: #ccc; }
 
     /* По-тясни екрани */
     @media (max-width: 900px) {
@@ -146,45 +200,110 @@
     </footer>
   </div>
 
+  <!-- Lightbox HTML -->
+  <div id="lightbox" class="lightbox">
+    <span class="lightbox-close">&times;</span>
+    <span class="lightbox-prev">&#10094;</span>
+    <span class="lightbox-next">&#10095;</span>
+    <img class="lightbox-content" id="lightbox-img">
+  </div>
+
   <script>
-  const FOLDER_ID = "1g5-Jb3RIkv_-e543bV9RgYfTdslwH321";
-  const API_KEY   = "AIzaSyBtctAzsAEuQcqZdARVCsLZ-1JeyuoM4o4";
+    const FOLDER_ID = "1g5-Jb3RIkv_-e543bV9RgYfTdslwH321";
+    const API_KEY   = "AIzaSyBtctAzsAEuQcqZdARVCsLZ-1JeyuoM4o4";
 
-  const query = encodeURIComponent(`'${FOLDER_ID}' in parents and mimeType contains 'image/' and trashed = false`);
-  const fields = encodeURIComponent('files(id,name,mimeType,webContentLink,webViewLink)');
-  const url = `https://www.googleapis.com/drive/v3/files?q=${query}&fields=${fields}&key=${API_KEY}`;
+    const query = encodeURIComponent(`'${FOLDER_ID}' in parents and mimeType contains 'image/' and trashed = false`);
+    const fields = encodeURIComponent('files(id,name,mimeType,webContentLink)');
+    const url = `https://www.googleapis.com/drive/v3/files?q=${query}&fields=${fields}&key=${API_KEY}`;
 
-  const galleryEl = document.getElementById('gallery');
-  const msgEl = document.getElementById('msg');
+    const galleryEl = document.getElementById('gallery');
+    const msgEl = document.getElementById('msg');
 
-  fetch(url)
-    .then(response => response.json())
-    .then(data => {
-      if (!data.files || !data.files.length) {
-        msgEl.textContent = "Няма намерени снимки в папката.";
-        return;
-      }
-      msgEl.remove();
-      data.files.forEach(file => {
-        const item = document.createElement('div');
-        item.className = 'gallery-item';
+    // Lightbox елементи
+    const lightbox = document.getElementById("lightbox");
+    const lightboxImg = document.getElementById("lightbox-img");
+    const lightboxClose = document.querySelector(".lightbox-close");
+    const lightboxPrev = document.querySelector(".lightbox-prev");
+    const lightboxNext = document.querySelector(".lightbox-next");
 
-        // Пробваме uc?id=, ако не – ползваме webContentLink
-        const imgUrl = `https://drive.google.com/uc?id=${file.id}`;
-        // алтернатива: const imgUrl = file.webContentLink;
+    let images = [];
+    let currentIndex = 0;
 
-        item.innerHTML = `
-          <img src="${imgUrl}" alt="${file.name}">
-          <p>${file.name.replace(/\.[^/.]+$/, "")}</p>
-        `;
-        galleryEl.appendChild(item);
+    fetch(url)
+      .then(response => response.json())
+      .then(data => {
+        if (!data.files || !data.files.length) {
+          msgEl.textContent = "Няма намерени снимки в папката.";
+          return;
+        }
+        msgEl.remove();
+        images = data.files.map(file => file.webContentLink);
+
+        data.files.forEach((file, index) => {
+          const item = document.createElement('div');
+          item.className = 'gallery-item';
+
+          const imgUrl = file.webContentLink;
+
+          const imgEl = document.createElement("img");
+          imgEl.src = imgUrl;
+          imgEl.alt = file.name;
+
+          // Клик за отваряне в lightbox
+          imgEl.addEventListener("click", () => {
+            currentIndex = index;
+            showImage();
+          });
+
+          item.appendChild(imgEl);
+          item.innerHTML += `<p>${file.name.replace(/\.[^/.]+$/, "")}</p>`;
+          galleryEl.appendChild(item);
+        });
+      })
+      .catch(err => {
+        console.error(err);
+        msgEl.textContent = "Грешка при зареждането. Провери API ключа, Folder ID и правата за споделяне.";
       });
-    })
-    .catch(err => {
-      console.error(err);
-      msgEl.textContent = "Грешка при зареждането. Провери API ключа, Folder ID и правата за споделяне.";
-    });
-</script>
 
+    function showImage() {
+      lightbox.style.display = "block";
+      lightboxImg.src = images[currentIndex];
+    }
+
+    // Затваряне
+    lightboxClose.onclick = function() {
+      lightbox.style.display = "none";
+    }
+    lightbox.onclick = function(e) {
+      if (e.target === lightbox) {
+        lightbox.style.display = "none";
+      }
+    }
+
+    // Навигация
+    lightboxPrev.onclick = function() {
+      currentIndex = (currentIndex - 1 + images.length) % images.length;
+      showImage();
+    }
+    lightboxNext.onclick = function() {
+      currentIndex = (currentIndex + 1) % images.length;
+      showImage();
+    }
+
+    // Навигация с клавиши ← и →
+    document.addEventListener("keydown", (e) => {
+      if (lightbox.style.display === "block") {
+        if (e.key === "ArrowLeft") {
+          currentIndex = (currentIndex - 1 + images.length) % images.length;
+          showImage();
+        } else if (e.key === "ArrowRight") {
+          currentIndex = (currentIndex + 1) % images.length;
+          showImage();
+        } else if (e.key === "Escape") {
+          lightbox.style.display = "none";
+        }
+      }
+    });
+  </script>
 </body>
 </html>
