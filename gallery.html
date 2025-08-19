@@ -1,42 +1,188 @@
 <!DOCTYPE html>
 <html lang="bg">
 <head>
-    <meta charset="UTF-8">
-    <title>Галерия – Мегданъ</title>
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <title>Галерия – Мегданъ</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #f9f9f9;
+    }
+
+    /* Навигация фиксирана отгоре */
+    header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 60px;
+      background: #004a99;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 20px;
+      z-index: 3000;
+    }
+
+    header .logo {
+      color: white;
+      font-weight: bold;
+      font-size: 20px;
+    }
+
+    header nav ul {
+      margin: 0;
+      padding: 0;
+      display: flex;
+      list-style: none;
+    }
+
+    header nav ul li {
+      margin-left: 20px;
+    }
+
+    header nav ul li a {
+      color: white;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    header nav ul li a.active {
+      text-decoration: underline;
+    }
+
+    /* Лява шевица */
+    .sidebar-left {
+      width: 150px;
+      background-image: url('12.png');
+      background-repeat: repeat-y;
+      background-position: center;
+      background-size: 500px auto;
+      position: fixed;
+      top: 60px;
+      bottom: 0;
+      left: 0;
+      z-index: 1000;
+    }
+
+    /* Дясна шевица */
+    .sidebar-right {
+      width: 150px;
+      background-image: url('12.png');
+      background-repeat: repeat-y;
+      background-position: center;
+      background-size: 500px auto;
+      position: fixed;
+      top: 60px;
+      bottom: 0;
+      right: 0;
+      z-index: 1000;
+      transform: scaleX(-1);
+    }
+
+    /* Основно съдържание */
+    main {
+      margin: 80px 170px; /* оставяме място за шевиците */
+    }
+
+    /* Галерия */
+    .gallery {
+      max-width: 1000px;
+      margin: 0 auto 50px;
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+      gap: 20px;
+    }
+
+    .gallery-item {
+      background: #fff;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      overflow: hidden;
+      text-align: center;
+      transition: transform 0.2s;
+    }
+
+    .gallery-item:hover {
+      transform: scale(1.05);
+    }
+
+    .gallery-item img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    .gallery-item p {
+      padding: 10px;
+      font-size: 14px;
+      color: #333;
+    }
+
+    /* Footer */
+    footer {
+      background: #004a99;
+      color: white;
+      text-align: center;
+      padding: 15px;
+      margin-top: 30px;
+      position: relative;
+      z-index: 2000; /* над шевиците */
+    }
+  </style>
 </head>
 <body>
 <header>
-    <nav>
-        <div class="logo">Мегданъ</div>
-        <ul>
-            <li><a href="index.html" >Начало</a></li>
-            <li><a href="about.html" >За нас</a></li>
-            <li><a href="classes.html" >Курсове</a></li>
-            <li><a href="gallery.html" class="active">Галерия</a></li>
-            <li><a href="contact.html" >Контакти</a></li>
-        </ul>
-    </nav>
+  <div class="logo">Мегданъ</div>
+  <nav>
+    <ul>
+      <li><a href="index.html">Начало</a></li>
+      <li><a href="about.html">За нас</a></li>
+      <li><a href="classes.html">Курсове</a></li>
+      <li><a href="gallery.html" class="active">Галерия</a></li>
+      <li><a href="contact.html">Контакти</a></li>
+    </ul>
+  </nav>
 </header>
-<main>
-    
-<aside class="sidebar">
-    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/19/Bulgarian_embroidery_motif.svg/1280px-Bulgarian_embroidery_motif.svg.png" alt="Българска шевица">
-</aside>
 
-    <section class="content">
-        
-        <h2>Галерия</h2>
-        <div class="gallery">
-            <img src="https://via.placeholder.com/300x200?text=Снимка+1" alt="Снимка 1">
-            <img src="https://via.placeholder.com/300x200?text=Снимка+2" alt="Снимка 2">
-            <img src="https://via.placeholder.com/300x200?text=Снимка+3" alt="Снимка 3">
-        </div>
-    
-    </section>
+<!-- Шевици -->
+<div class="sidebar-left"></div>
+<div class="sidebar-right"></div>
+
+<main>
+  <h2 style="text-align:center; margin-bottom:30px;">Нашата галерия</h2>
+  <div class="gallery" id="gallery"></div>
 </main>
+
 <footer>
-    <p>&copy; 2025 Мегданъ. Всички права запазени.</p>
+  <p>&copy; 2025 Мегданъ. Всички права запазени.</p>
 </footer>
+
+<script>
+  // 🔑 СЛОЖИ API ключа си и ID на Google Drive папката
+  const folderId = "https://drive.google.com/drive/folders/1g5-Jb3RIkv_-e543bV9RgYfTdslwH321?usp=sharing";
+  const apiKey = "AIzaSyBtctAzsAEuQcqZdARVCsLZ-1JeyuoM4o4";
+
+  fetch(`https://www.googleapis.com/drive/v3/files?q='${folderId}'+in+parents&key=${apiKey}&fields=files(id,name,webContentLink)`)
+    .then(res => res.json())
+    .then(data => {
+      const gallery = document.getElementById("gallery");
+      data.files.forEach(file => {
+        if(file.name.match(/\.(jpg|jpeg|png|gif)$/i)){
+          const item = document.createElement("div");
+          item.className = "gallery-item";
+          item.innerHTML = `
+            <img src="https://drive.google.com/uc?id=${file.id}" alt="${file.name}">
+            <p>${file.name.replace(/\.[^/.]+$/, "")}</p>
+          `;
+          gallery.appendChild(item);
+        }
+      });
+    })
+    .catch(err => console.error("Error loading images:", err));
+</script>
+
 </body>
 </html>
