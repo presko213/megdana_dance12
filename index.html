@@ -4,137 +4,146 @@
 <meta charset="UTF-8">
 <title>Начало – Мегданъ</title>
 <style>
-  :root {
-    --header-h: 60px;
-    --footer-h: 80px;
-    --sidebar-w: 150px;
-  }
+:root{
+  --header-h: 60px;
+  --footer-h: 80px;
+  --sidebar-w: 150px;
+}
 
-  * { box-sizing: border-box; }
+* { box-sizing: border-box; }
+html, body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #f9f9f9;
+}
 
-  html, body {
-    height: 100%;
-    margin: 0;
-    font-family: Arial, sans-serif;
-    background: #f9f9f9;
-  }
+/* Навигация (фиксирана) */
+header {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  height: var(--header-h);
+  background: #004a99;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 20px;
+  z-index: 3000;
+}
+header .logo { color: white; font-weight: bold; font-size: 20px; }
+header nav ul { margin: 0; padding: 0; display: flex; list-style: none; }
+header nav ul li { margin-left: 20px; }
+header nav ul li a { color: white; text-decoration: none; font-weight: bold; }
+header nav ul li a.active { text-decoration: underline; }
 
-  header {
-    position: fixed;
-    top: 0; left: 0; right: 0;
-    height: var(--header-h);
-    background: #004a99;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 0 20px;
-    z-index: 3000;
-  }
-  header .logo { color: white; font-weight: bold; font-size: 20px; }
-  header nav ul { margin: 0; padding: 0; display: flex; list-style: none; }
-  header nav ul li { margin-left: 20px; }
-  header nav ul li a { color: white; text-decoration: none; font-weight: bold; }
-  header nav ul li a.active { text-decoration: underline; }
+/* Content wrapper */
+.content-wrapper {
+  position: relative;
+  min-height: calc(100vh - var(--footer-h));
+  padding-top: calc(var(--header-h) + 40px);
+  padding-bottom: 40px;
+}
 
-  .content-wrapper {
-    position: relative;
-    min-height: calc(100vh - var(--footer-h));
-    padding-top: calc(var(--header-h) + 40px);
-    padding-bottom: 40px;
-  }
+/* Странични шевици */
+.sidebar-left, .sidebar-right {
+  position: absolute;
+  top: var(--header-h);
+  bottom: 0;
+  width: var(--sidebar-w);
+  background-image: url('12.png');
+  background-repeat: repeat-y;
+  background-position: center top;
+  background-size: 500px auto;
+  z-index: 1000;
+  image-rendering: crisp-edges;
+  image-rendering: -webkit-optimize-contrast;
+  image-rendering: pixelated;
+}
+.sidebar-left { left: 0; }
+.sidebar-right { right: 0; transform: scaleX(-1); }
 
-  .sidebar-left,
-  .sidebar-right {
-    position: absolute;
-    top: var(--header-h);
-    bottom: 0;
-    width: var(--sidebar-w);
-    background-image: url('12.png');
-    background-repeat: repeat-y;
-    background-position: center top;
-    background-size: 500px auto;
-    z-index: 1000;
-    image-rendering: crisp-edges;
-    image-rendering: -webkit-optimize-contrast;
-    image-rendering: pixelated;
-  }
-  .sidebar-left  { left: 0; }
-  .sidebar-right { right: 0; transform: scaleX(-1); }
+/* Основно съдържание */
+main {
+  max-width: 1200px;
+  margin: 0 auto 40px;
+  padding: 20px;
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+  position: relative;
+  z-index: 1500;
+}
 
-  main {
-    max-width: 900px;
-    margin: 0 auto 40px;
-    padding: 20px;
-    background: #fff;
-    border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0,0,0,0.1);
-    position: relative;
-    z-index: 1500;
-  }
+/* Добре дошли секция */
+.welcome {
+  position: relative;
+  text-align: center;
+  margin-bottom: 40px;
+}
+.welcome img.logo {
+  width: 150px;
+  height: auto;
+  position: absolute;
+  top: 10px;
+  left: 20px;
+}
+.welcome h1 {
+  font-size: 3em;
+  color: #004a99;
+  margin: 0;
+  padding: 100px 20px 40px;
+}
 
-  .welcome-section {
-    position: relative;
-    text-align: center;
-    margin-bottom: 40px;
-  }
-  .welcome-section img.logo-placeholder {
-    width: 150px;
-    height: 150px;
-    object-fit: contain;
-    position: absolute;
-    top: 20px;
-    left: 50%;
-    transform: translateX(-50%);
-  }
-  .welcome-section h1 {
-    font-size: 3em;
-    margin-top: 100px;
-    color: #004a99;
-  }
+/* Информация за нас */
+.about-us {
+  margin-bottom: 40px;
+}
+.about-us h2 { color: #004a99; margin-bottom: 10px; }
+.about-us p { font-size: 1em; line-height: 1.6; color: #333; }
 
-  .info-section {
-    margin-bottom: 40px;
-  }
+/* Секция събития */
+.news-section { margin-bottom: 40px; }
+.news-section h2 { color: #004a99; margin-bottom: 20px; }
+.news-container { display: flex; flex-wrap: wrap; gap: 20px; }
 
-  .events-section h2 {
-    margin-bottom: 10px;
-  }
+.news-card {
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  overflow: hidden;
+  width: 280px;
+  display: flex;
+  flex-direction: column;
+}
+.news-card img { width: 100%; height: 160px; object-fit: cover; }
+.news-card .content { padding: 15px; }
+.news-card .content h3 { margin: 0 0 10px; font-size: 1.2em; color: #004a99; }
+.news-card .content p { margin: 0; font-size: 0.95em; color: #333; }
+.news-card button {
+  margin: 10px 15px;
+  align-self: flex-end;
+  background: #c00;
+  border: none;
+  color: #fff;
+  padding: 5px 10px;
+  border-radius: 5px;
+  cursor: pointer;
+}
 
-  .event-list {
-    list-style: none;
-    padding: 0;
-  }
-  .event-list li {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 5px;
-    background: #f0f0f0;
-    padding: 5px 10px;
-    border-radius: 5px;
-  }
-  .event-list button {
-    background: #c00;
-    border: none;
-    color: white;
-    cursor: pointer;
-    border-radius: 3px;
-    padding: 2px 6px;
-  }
+/* Футър */
+footer {
+  height: var(--footer-h);
+  background: #004a99;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 20px;
+}
 
-  .events-section input {
-    padding: 5px;
-    margin-right: 5px;
-  }
-
-  footer {
-    height: var(--footer-h);
-    background: #004a99;
-    color: #fff;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 0 20px;
-  }
+/* Малък guard */
+@media (max-height: 540px) {
+  .content-wrapper { padding-top: calc(var(--header-h) + 20px); }
+}
 </style>
 </head>
 <body>
@@ -157,26 +166,22 @@
   <div class="sidebar-right"></div>
 
   <main>
-    <!-- Добре дошли + лого -->
-    <div class="welcome-section">
-      <img src="logo-placeholder.png" alt="Лого" class="logo-placeholder">
+    <!-- Добре дошли -->
+    <div class="welcome">
+      <img src="logo.png" alt="Лого" class="logo">
       <h1>Добре дошли в Мегданъ!</h1>
     </div>
 
     <!-- Информация за нас -->
-    <div class="info-section">
+    <div class="about-us">
       <h2>За нас</h2>
-      <p>Тук можеш да добавиш информация за залата, историята, курсовете и екипа.</p>
+      <p>Мегданъ е школа за народни танци с дългогодишна традиция. Тук се учат начинаещи и напреднали, деца и възрастни, с голямо внимание към автентичността и забавлението. Нашите хореографи са професионалисти и ще ви вдъхновят да откриете радостта на народните танци.</p>
     </div>
 
-    <!-- Минали и предстоящи събития -->
-    <div class="events-section">
+    <!-- Събития/Новини -->
+    <div class="news-section">
       <h2>Събития</h2>
-      <input type="text" id="newEvent" placeholder="Добави събитие">
-      <button onclick="addEvent()">Добави</button>
-      <ul class="event-list" id="eventList">
-        <!-- Новини ще се добавят тук -->
-      </ul>
+      <div id="newsContainer" class="news-container"></div>
     </div>
   </main>
 </div>
@@ -186,22 +191,40 @@
 </footer>
 
 <script>
-function addEvent() {
-  const input = document.getElementById('newEvent');
-  const text = input.value.trim();
-  if (text === '') return;
+// Функция за добавяне на новина
+function addNews(title, text, imageUrl) {
+  const container = document.getElementById('newsContainer');
 
-  const li = document.createElement('li');
-  li.textContent = text;
+  const card = document.createElement('div');
+  card.className = 'news-card';
+
+  const img = document.createElement('img');
+  img.src = imageUrl || 'placeholder.png';
+
+  const content = document.createElement('div');
+  content.className = 'content';
+
+  const h3 = document.createElement('h3');
+  h3.textContent = title;
+
+  const p = document.createElement('p');
+  p.textContent = text;
 
   const btn = document.createElement('button');
-  btn.textContent = 'X';
-  btn.onclick = function() { li.remove(); };
-  li.appendChild(btn);
+  btn.textContent = 'Изтрий';
+  btn.onclick = () => card.remove();
 
-  document.getElementById('eventList').appendChild(li);
-  input.value = '';
+  content.appendChild(h3);
+  content.appendChild(p);
+  card.appendChild(img);
+  card.appendChild(content);
+  card.appendChild(btn);
+
+  container.appendChild(card);
 }
+
+// Пример за добавяне от конзолата
+// addNews('Бал на учениците', 'Миналата седмица се проведе...', 'event1.jpg');
 </script>
 
 </body>
