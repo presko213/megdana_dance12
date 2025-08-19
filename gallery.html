@@ -106,7 +106,7 @@
       z-index: 1;
     }
 
-    /* Lightbox стилове */
+    /* Lightbox */
     .lightbox {
       display: none;
       position: fixed;
@@ -118,7 +118,6 @@
       overflow: auto;
       background: rgba(0,0,0,0.9);
     }
-
     .lightbox-content {
       margin: 5% auto;
       display: block;
@@ -127,7 +126,6 @@
       border-radius: 10px;
       box-shadow: 0 0 20px #000;
     }
-
     .lightbox-close {
       position: absolute;
       top: 20px;
@@ -136,13 +134,10 @@
       font-size: 40px;
       font-weight: bold;
       cursor: pointer;
-      transition: 0.3s;
+      transition: .3s;
     }
-    .lightbox-close:hover {
-      color: #ccc;
-    }
+    .lightbox-close:hover { color: #ccc; }
 
-    /* Стрелки */
     .lightbox-prev, .lightbox-next {
       cursor: pointer;
       position: absolute;
@@ -153,15 +148,13 @@
       color: #fff;
       font-weight: bold;
       font-size: 40px;
-      transition: 0.3s;
+      transition: .3s;
       user-select: none;
     }
-
     .lightbox-prev { left: 20px; }
     .lightbox-next { right: 20px; }
     .lightbox-prev:hover, .lightbox-next:hover { color: #ccc; }
 
-    /* По-тясни екрани */
     @media (max-width: 900px) {
       .sidebar-left, .sidebar-right { display: none; }
       main { margin: 80px 20px 30px; }
@@ -200,59 +193,83 @@
     </footer>
   </div>
 
-  <!-- Lightbox HTML -->
+  <!-- Lightbox -->
   <div id="lightbox" class="lightbox">
     <span class="lightbox-close">&times;</span>
     <span class="lightbox-prev">&#10094;</span>
     <span class="lightbox-next">&#10095;</span>
-    <img class="lightbox-content" id="lightbox-img">
+    <img class="lightbox-content" id="lightbox-img" referrerpolicy="no-referrer">
   </div>
 
   <script>
     const FOLDER_ID = "1g5-Jb3RIkv_-e543bV9RgYfTdslwH321";
     const API_KEY   = "AIzaSyBtctAzsAEuQcqZdARVCsLZ-1JeyuoM4o4";
 
-    const query = encodeURIComponent(`'${FOLDER_ID}' in parents and mimeType contains 'image/' and trashed = false`);
-    const fields = encodeURIComponent('files(id,name,mimeType,webContentLink)');
-    const url = `https://www.googleapis.com/drive/v3/files?q=${query}&fields=${fields}&key=${API_KEY}`;
+    const query  = encodeURIComponent(`'${FOLDER_ID}' in parents and mimeType contains 'image/' and trashed = false`);
+    const fields = encodeURIComponent('files(id,name,mimeType,thumbnailLink)');
+    const url    = `https://www.googleapis.com/drive/v3/files?q=${query}&fields=${fields}&key=${API_KEY}`;
 
-    const galleryEl = document.getElementById('gallery');
-    const msgEl = document.getElementById('msg');
+    const galleryEl   = document.getElementById('gallery');
+    const msgEl       = document.getElementById('msg');
 
     // Lightbox елементи
-    const lightbox = document.getElementById("lightbox");
-    const lightboxImg = document.getElementById("lightbox-img");
+    const lightbox      = document.getElementById("lightbox");
+    const lightboxImg   = document.getElementById("lightbox-img");
     const lightboxClose = document.querySelector(".lightbox-close");
-    const lightboxPrev = document.querySelector(".lightbox-prev");
-    const lightboxNext = document.querySelector(".lightbox-next");
+    const lightboxPrev  = document.querySelector(".lightbox-prev");
+    const lightboxNext  = document.querySelector(".lightbox-next");
 
-    let images = [];
+    // За слайдване
+    let images = []; // масив от обекти {primary, uc, thumb, title}
     let currentIndex = 0;
 
+    // Генерира най-стабилните URL-и за показване
+    function buildUrls(file) {
+      const primary = `https://www.googleapis.com/drive/v3/files/${file.id}?alt=media&key=${API_KEY}`; // директен байтов поток
+      const uc      = `https://drive.google.com/uc?export=view&id=${file.id}`;                         // фолбек
+      const thumb   = file.thumbnailLink || "";                                                         // последен фолбек (малък)
+      return { primary, uc, thumb, title: file.name };
+    }
+
+    // Зареждаме списъка
     fetch(url)
-      .then(response => response.json())
+      .then(r => r.json())
       .then(data => {
         if (!data.files || !data.files.length) {
           msgEl.textContent = "Няма намерени снимки в папката.";
           return;
         }
         msgEl.remove();
-        images = data.files.map(file => file.webContentLink);
+
+        images = data.files.map(buildUrls);
 
         data.files.forEach((file, index) => {
+          const { primary, uc, thumb } = buildUrls(file);
+
           const item = document.createElement('div');
           item.className = 'gallery-item';
 
-          const imgUrl = file.webContentLink;
-
-          const imgEl = document.createElement("img");
-          imgEl.src = imgUrl;
+          const imgEl = new Image();
+          imgEl.loading = "lazy";
+          imgEl.referrerPolicy = "no-referrer";
           imgEl.alt = file.name;
 
-          // Клик за отваряне в lightbox
+          // 1) опит с alt=media, 2) фолбек към uc?export=view, 3) фолбек към thumbnailLink
+          imgEl.src = primary;
+          imgEl.onerror = () => {
+            imgEl.onerror = () => {
+              if (thumb) {
+                imgEl.onerror = null;
+                imgEl.src = thumb;
+              }
+            };
+            imgEl.src = uc;
+          };
+
+          // Lightbox при клик
           imgEl.addEventListener("click", () => {
             currentIndex = index;
-            showImage();
+            openLightbox();
           });
 
           item.appendChild(imgEl);
@@ -265,43 +282,40 @@
         msgEl.textContent = "Грешка при зареждането. Провери API ключа, Folder ID и правата за споделяне.";
       });
 
-    function showImage() {
+    function openLightbox() {
       lightbox.style.display = "block";
-      lightboxImg.src = images[currentIndex];
+      showCurrent();
+    }
+
+    function showCurrent() {
+      const { primary, uc, thumb, title } = images[currentIndex];
+      lightboxImg.alt = title;
+      lightboxImg.src = primary;
+      lightboxImg.onerror = () => {
+        lightboxImg.onerror = () => {
+          if (thumb) {
+            lightboxImg.onerror = null;
+            lightboxImg.src = thumb;
+          }
+        };
+        lightboxImg.src = uc;
+      };
     }
 
     // Затваряне
-    lightboxClose.onclick = function() {
-      lightbox.style.display = "none";
-    }
-    lightbox.onclick = function(e) {
-      if (e.target === lightbox) {
-        lightbox.style.display = "none";
-      }
-    }
+    lightboxClose.onclick = () => lightbox.style.display = "none";
+    lightbox.onclick = (e) => { if (e.target === lightbox) lightbox.style.display = "none"; };
 
     // Навигация
-    lightboxPrev.onclick = function() {
-      currentIndex = (currentIndex - 1 + images.length) % images.length;
-      showImage();
-    }
-    lightboxNext.onclick = function() {
-      currentIndex = (currentIndex + 1) % images.length;
-      showImage();
-    }
+    lightboxPrev.onclick = () => { currentIndex = (currentIndex - 1 + images.length) % images.length; showCurrent(); };
+    lightboxNext.onclick = () => { currentIndex = (currentIndex + 1) % images.length; showCurrent(); };
 
-    // Навигация с клавиши ← и →
+    // Клавиатура
     document.addEventListener("keydown", (e) => {
       if (lightbox.style.display === "block") {
-        if (e.key === "ArrowLeft") {
-          currentIndex = (currentIndex - 1 + images.length) % images.length;
-          showImage();
-        } else if (e.key === "ArrowRight") {
-          currentIndex = (currentIndex + 1) % images.length;
-          showImage();
-        } else if (e.key === "Escape") {
-          lightbox.style.display = "none";
-        }
+        if (e.key === "ArrowLeft")  { currentIndex = (currentIndex - 1 + images.length) % images.length; showCurrent(); }
+        if (e.key === "ArrowRight") { currentIndex = (currentIndex + 1) % images.length; showCurrent(); }
+        if (e.key === "Escape")     { lightbox.style.display = "none"; }
       }
     });
   </script>
