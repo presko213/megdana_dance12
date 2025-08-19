@@ -1,116 +1,197 @@
-<!DOCTYPE html>
+<!DOCTYPE html> 
 <html lang="bg">
 <head>
   <meta charset="UTF-8">
-  <title>Нашата галерия</title>
+  <title>Галерия – Мегданъ</title>
+  <link rel="stylesheet" href="style.css">
   <style>
+    /* Базови стилове */
+    html, body { height: 100%; }
     body {
-      font-family: Arial, sans-serif;
-      background: #f5f5f5;
       margin: 0;
-      padding: 0;
-      text-align: center;
+      font-family: Arial, sans-serif;
+      background: #f9f9f9;
+      position: relative;
     }
-    h2 {
-      color: #003366;
-      margin: 20px;
+
+    .page {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
     }
-    #gallery {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-      gap: 15px;
+
+    /* Хедър */
+    header {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      height: 60px;
+      background: #004a99;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 20px;
+      z-index: 3000;
+    }
+    header .logo { color: #fff; font-weight: bold; font-size: 20px; }
+    header nav ul { margin: 0; padding: 0; list-style: none; display: flex; gap: 20px; }
+    header nav a { color: #fff; text-decoration: none; font-weight: bold; }
+    header nav a.active, header nav a:hover { text-decoration: underline; }
+
+    /* Шевици */
+    .sidebar-left, .sidebar-right {
+      width: 150px;
+      background-image: url('12.png');
+      background-repeat: repeat-y;
+      background-position: center;
+      background-size: 500px auto;
+      position: absolute;
+      top: 60px;
+      bottom: 0;
+      z-index: 0;
+    }
+    .sidebar-left  { left: 0; }
+    .sidebar-right { right: 0; transform: scaleX(-1); }
+
+    /* Основно съдържание */
+    main {
+      flex: 1;
+      margin: 80px 170px 30px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .card {
+      max-width: 1000px;
+      margin: 0 auto;
+      background: #fff;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
       padding: 20px;
-      max-width: 1200px;
-      margin: auto;
+    }
+
+    h2 {
+      text-align: center;
+      margin: 0 0 20px;
+      color: #004a99;
+    }
+
+    /* Галерия */
+    .gallery {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+      gap: 20px;
     }
     .gallery-item {
-      background: white;
+      background: #fff;
       border-radius: 10px;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
       overflow: hidden;
+      text-align: center;
+      transition: transform .2s;
       cursor: pointer;
-      transition: transform 0.2s;
     }
-    .gallery-item:hover {
-      transform: scale(1.05);
-    }
-    .gallery-item img {
-      width: 100%;
-      height: 180px;
-      object-fit: cover;
-      display: block;
-    }
-    .gallery-item p {
-      margin: 10px;
-      font-size: 14px;
-      color: #333;
+    .gallery-item:hover { transform: scale(1.03); }
+    .gallery-item img { width: 100%; height: auto; display: block; }
+    .gallery-item p { padding: 10px; font-size: 14px; color: #333; }
+
+    .notice { text-align: center; color: #666; padding: 10px 0; }
+
+    /* Футър */
+    footer {
+      background: #004a99;
+      color: #fff;
+      text-align: center;
+      padding: 15px;
+      position: relative;
+      z-index: 1;
     }
 
     /* Lightbox */
     .lightbox {
       display: none;
       position: fixed;
-      z-index: 9999;
-      padding: 20px;
+      z-index: 5000;
       left: 0;
       top: 0;
       width: 100%;
       height: 100%;
       overflow: auto;
-      background-color: rgba(0,0,0,0.9);
-      animation: fadeIn 0.3s ease;
+      background: rgba(0,0,0,0.9);
     }
     .lightbox-content {
-      margin: auto;
+      margin: 5% auto;
       display: block;
       max-width: 90%;
       max-height: 80vh;
       border-radius: 10px;
-      box-shadow: 0 0 15px rgba(0,0,0,0.5);
-      animation: zoomIn 0.3s ease;
-    }
-    .lightbox-close,
-    .lightbox-prev,
-    .lightbox-next {
-      color: white;
-      font-size: 40px;
-      font-weight: bold;
-      position: absolute;
-      top: 50%;
-      transform: translateY(-50%);
-      cursor: pointer;
-      user-select: none;
-      padding: 10px;
-      transition: color 0.2s;
+      box-shadow: 0 0 20px #000;
     }
     .lightbox-close {
+      position: absolute;
       top: 20px;
       right: 35px;
-      font-size: 50px;
-      transform: none;
+      color: #fff;
+      font-size: 40px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: .3s;
     }
-    .lightbox-prev { left: 10px; }
-    .lightbox-next { right: 10px; }
-    .lightbox-prev:hover,
-    .lightbox-next:hover,
-    .lightbox-close:hover {
-      color: #ffcc00;
-    }
+    .lightbox-close:hover { color: #ccc; }
 
-    @keyframes fadeIn {
-      from { opacity: 0; }
-      to { opacity: 1; }
+    .lightbox-prev, .lightbox-next {
+      cursor: pointer;
+      position: absolute;
+      top: 50%;
+      width: auto;
+      padding: 16px;
+      margin-top: -50px;
+      color: #fff;
+      font-weight: bold;
+      font-size: 40px;
+      transition: .3s;
+      user-select: none;
     }
-    @keyframes zoomIn {
-      from { transform: scale(0.7); opacity: 0; }
-      to { transform: scale(1); opacity: 1; }
+    .lightbox-prev { left: 20px; }
+    .lightbox-next { right: 20px; }
+    .lightbox-prev:hover, .lightbox-next:hover { color: #ccc; }
+
+    @media (max-width: 900px) {
+      .sidebar-left, .sidebar-right { display: none; }
+      main { margin: 80px 20px 30px; }
     }
   </style>
 </head>
 <body>
-  <h2>Нашата галерия</h2>
-  <div id="msg">Зареждане на снимки...</div>
-  <div id="gallery"></div>
+  <div class="page">
+    <header>
+      <div class="logo">Мегданъ</div>
+      <nav>
+        <ul>
+          <li><a href="index.html">Начало</a></li>
+          <li><a href="about.html">За нас</a></li>
+          <li><a href="classes.html">Курсове</a></li>
+          <li><a href="gallery.html" class="active">Галерия</a></li>
+          <li><a href="contact.html">Контакти</a></li>
+        </ul>
+      </nav>
+    </header>
+
+    <!-- Шевици -->
+    <div class="sidebar-left"></div>
+    <div class="sidebar-right"></div>
+
+    <main>
+      <div class="card">
+        <h2>Нашата галерия</h2>
+        <div id="msg" class="notice">Зареждане на снимки…</div>
+        <div class="gallery" id="gallery"></div>
+      </div>
+    </main>
+
+    <footer>
+      <p>&copy; 2025 Мегданъ. Всички права запазени.</p>
+    </footer>
+  </div>
 
   <!-- Lightbox -->
   <div id="lightbox" class="lightbox">
@@ -124,71 +205,82 @@
     const FOLDER_ID = "1g5-Jb3RIkv_-e543bV9RgYfTdslwH321";
     const API_KEY   = "AIzaSyBtctAzsAEuQcqZdARVCsLZ-1JeyuoM4o4";
 
-    const query = encodeURIComponent(`'${FOLDER_ID}' in parents and mimeType contains 'image/' and trashed = false`);
+    const query  = encodeURIComponent(`'${FOLDER_ID}' in parents and mimeType contains 'image/' and trashed = false`);
     const fields = encodeURIComponent('files(id,name,mimeType,thumbnailLink)');
-    const url = `https://www.googleapis.com/drive/v3/files?q=${query}&fields=${fields}&key=${API_KEY}`;
+    const url    = `https://www.googleapis.com/drive/v3/files?q=${query}&fields=${fields}&key=${API_KEY}`;
 
-    const galleryEl = document.getElementById('gallery');
-    const msgEl = document.getElementById('msg');
+    const galleryEl   = document.getElementById('gallery');
+    const msgEl       = document.getElementById('msg');
 
-    let images = [];
-    let currentIndex = 0;
-
-    fetch(url)
-      .then(response => response.json())
-      .then(data => {
-        if (!data.files || !data.files.length) {
-          msgEl.textContent = "Няма намерени снимки в папката.";
-          return;
-        }
-        msgEl.remove();
-        images = data.files.map(file => {
-          return {
-            primary: `https://www.googleapis.com/drive/v3/files/${file.id}?alt=media&key=${API_KEY}`,
-            uc: `https://drive.google.com/uc?export=view&id=${file.id}`,
-            thumb: file.thumbnailLink || "",
-            title: file.name.replace(/\.[^/.]+$/, "")
-          };
-        });
-        images.forEach((img, index) => {
-          const item = document.createElement('div');
-          item.className = 'gallery-item';
-          const imgEl = document.createElement('img');
-          imgEl.alt = img.title;
-          imgEl.src = img.primary;
-          imgEl.onerror = () => {
-            imgEl.onerror = () => {
-              if (img.thumb) {
-                imgEl.onerror = null;
-                imgEl.src = img.thumb;
-              }
-            };
-            imgEl.src = img.uc;
-          };
-          imgEl.addEventListener("click", () => openLightbox(index));
-          item.appendChild(imgEl);
-          const p = document.createElement('p');
-          p.textContent = img.title;
-          item.appendChild(p);
-          galleryEl.appendChild(item);
-        });
-      })
-      .catch(err => {
-        console.error(err);
-        msgEl.textContent = "Грешка при зареждането.";
-      });
-
-    // Lightbox
+    // Lightbox елементи
     const lightbox      = document.getElementById("lightbox");
     const lightboxImg   = document.getElementById("lightbox-img");
     const lightboxClose = document.querySelector(".lightbox-close");
     const lightboxPrev  = document.querySelector(".lightbox-prev");
     const lightboxNext  = document.querySelector(".lightbox-next");
 
-    function openLightbox(index) {
-      currentIndex = index;
-      showCurrent();
+    let images = []; // масив от {primary, uc, thumb, title}
+    let currentIndex = 0;
+
+    function buildUrls(file) {
+      const primary = `https://www.googleapis.com/drive/v3/files/${file.id}?alt=media&key=${API_KEY}`;
+      const uc      = `https://drive.google.com/uc?export=view&id=${file.id}`;
+      const thumb   = file.thumbnailLink || "";
+      return { primary, uc, thumb, title: file.name };
+    }
+
+    fetch(url)
+      .then(r => r.json())
+      .then(data => {
+        if (!data.files || !data.files.length) {
+          msgEl.textContent = "Няма намерени снимки в папката.";
+          return;
+        }
+        msgEl.remove();
+
+        images = data.files.map(buildUrls);
+
+        data.files.forEach((file, index) => {
+          const { primary, uc, thumb } = buildUrls(file);
+
+          const item = document.createElement('div');
+          item.className = 'gallery-item';
+
+          const imgEl = new Image();
+          imgEl.loading = "lazy";
+          imgEl.referrerPolicy = "no-referrer";
+          imgEl.alt = file.name;
+
+          imgEl.src = primary;
+          imgEl.onerror = () => {
+            imgEl.onerror = () => {
+              if (thumb) {
+                imgEl.onerror = null;
+                imgEl.src = thumb;
+              }
+            };
+            imgEl.src = uc;
+          };
+
+          // Lightbox при клик
+          imgEl.addEventListener("click", () => {
+            currentIndex = index;
+            openLightbox();
+          });
+
+          item.appendChild(imgEl);
+          item.innerHTML += `<p>${file.name.replace(/\.[^/.]+$/, "")}</p>`;
+          galleryEl.appendChild(item);
+        });
+      })
+      .catch(err => {
+        console.error(err);
+        msgEl.textContent = "Грешка при зареждането. Провери API ключа, Folder ID и правата за споделяне.";
+      });
+
+    function openLightbox() {
       lightbox.style.display = "block";
+      showCurrent();
     }
 
     function showCurrent() {
@@ -206,24 +298,15 @@
       };
     }
 
-    lightboxPrev.onclick = () => {
-      currentIndex = (currentIndex - 1 + images.length) % images.length;
-      showCurrent();
-    };
-    lightboxNext.onclick = () => {
-      currentIndex = (currentIndex + 1) % images.length;
-      showCurrent();
-    };
-    lightboxClose.onclick = () => (lightbox.style.display = "none");
+    // Затваряне
+    lightboxClose.onclick = () => lightbox.style.display = "none";
     lightbox.onclick = (e) => { if (e.target === lightbox) lightbox.style.display = "none"; };
 
+    // Навигация
+    lightboxPrev.onclick = () => { currentIndex = (currentIndex - 1 + images.length) % images.length; showCurrent(); };
+    lightboxNext.onclick = () => { currentIndex = (currentIndex + 1) % images.length; showCurrent(); };
+
+    // Клавиатура
     document.addEventListener("keydown", (e) => {
       if (lightbox.style.display === "block") {
-        if (e.key === "ArrowLeft")  { lightboxPrev.onclick(); }
-        if (e.key === "ArrowRight") { lightboxNext.onclick(); }
-        if (e.key === "Escape")     { lightbox.style.display = "none"; }
-      }
-    });
-  </script>
-</body>
-</html>
+        if (e.key === "ArrowLeft")  { currentIndex = (currentIndex - 1 + images.length)
