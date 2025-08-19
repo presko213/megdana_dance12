@@ -1,120 +1,141 @@
 <!DOCTYPE html>
 <html lang="bg">
 <head>
-  <meta charset="UTF-8">
-  <title>Начало – Мегданъ</title>
-  <style>
-    /* Нулиране на отстоянията */
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background: #f9f9f9;
-    }
+<meta charset="UTF-8">
+<title>Начало – Мегданъ</title>
+<style>
+  :root {
+    --header-h: 60px;
+    --footer-h: 80px;
+    --sidebar-w: 150px;
+  }
 
-    /* Навигация фиксирана отгоре */
-    header {
-      position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      height: 60px;
-      background: #004a99;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 0 20px;
-      z-index: 3000;
-    }
+  * { box-sizing: border-box; }
 
-    header .logo {
-      color: white;
-      font-weight: bold;
-      font-size: 20px;
-    }
+  html, body {
+    height: 100%;
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #f9f9f9;
+  }
 
-    header nav ul {
-      margin: 0;
-      padding: 0;
-      display: flex;
-      list-style: none;
-    }
+  header {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    height: var(--header-h);
+    background: #004a99;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 20px;
+    z-index: 3000;
+  }
+  header .logo { color: white; font-weight: bold; font-size: 20px; }
+  header nav ul { margin: 0; padding: 0; display: flex; list-style: none; }
+  header nav ul li { margin-left: 20px; }
+  header nav ul li a { color: white; text-decoration: none; font-weight: bold; }
+  header nav ul li a.active { text-decoration: underline; }
 
-    header nav ul li {
-      margin-left: 20px;
-    }
+  .content-wrapper {
+    position: relative;
+    min-height: calc(100vh - var(--footer-h));
+    padding-top: calc(var(--header-h) + 40px);
+    padding-bottom: 40px;
+  }
 
-    header nav ul li a {
-      color: white;
-      text-decoration: none;
-      font-weight: bold;
-    }
+  .sidebar-left,
+  .sidebar-right {
+    position: absolute;
+    top: var(--header-h);
+    bottom: 0;
+    width: var(--sidebar-w);
+    background-image: url('12.png');
+    background-repeat: repeat-y;
+    background-position: center top;
+    background-size: 500px auto;
+    z-index: 1000;
+    image-rendering: crisp-edges;
+    image-rendering: -webkit-optimize-contrast;
+    image-rendering: pixelated;
+  }
+  .sidebar-left  { left: 0; }
+  .sidebar-right { right: 0; transform: scaleX(-1); }
 
-    header nav ul li a.active {
-      text-decoration: underline;
-    }
+  main {
+    max-width: 900px;
+    margin: 0 auto 40px;
+    padding: 20px;
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    position: relative;
+    z-index: 1500;
+  }
 
-    /* Лява шевица */
-    .sidebar-left {
-      width: 150px;
-      background-image: url('12.png');
-      background-repeat: repeat-y;
-      background-position: center;
-      background-size: 500px auto;
-      position: fixed;
-      top: 60px;
-      bottom: 0;
-      left: 0;
-      z-index: 0;
-    }
+  .welcome-section {
+    position: relative;
+    text-align: center;
+    margin-bottom: 40px;
+  }
+  .welcome-section img.logo-placeholder {
+    width: 150px;
+    height: 150px;
+    object-fit: contain;
+    position: absolute;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+  .welcome-section h1 {
+    font-size: 3em;
+    margin-top: 100px;
+    color: #004a99;
+  }
 
-    /* Дясна шевица */
-    .sidebar-right {
-      width: 150px;
-      background-image: url('12.png');
-      background-repeat: repeat-y;
-      background-position: center;
-      background-size: 500px auto;
-      position: fixed;
-      top: 60px;
-      bottom: 0;
-      right: 0;
-      z-index: 0;
-      transform: scaleX(-1);
-    }
+  .info-section {
+    margin-bottom: 40px;
+  }
 
-    .sidebar-left,
-.sidebar-right {
-  width: 150px;
-  background-image: url('12.png');
-  background-repeat: repeat-y;
-  background-position: center;
-  background-size: 500px auto;
-  position: absolute;
-  top: 60px;
-  height: calc(100% - 60px - 80px); /* 60px header + ~80px footer */
-  z-index: 1000;
-}
+  .events-section h2 {
+    margin-bottom: 10px;
+  }
 
-    /* Основно съдържание */
-    main {
-      max-width: 900px;
-      margin: 100px auto 40px; /* отстояние отгоре заради header */
-      padding: 20px;
-      background: white;
-      border-radius: 10px;
-      box-shadow: 0 0 10px rgba(0,0,0,0.1);
-      position: relative;
-      z-index: 1500;
-    }
+  .event-list {
+    list-style: none;
+    padding: 0;
+  }
+  .event-list li {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 5px;
+    background: #f0f0f0;
+    padding: 5px 10px;
+    border-radius: 5px;
+  }
+  .event-list button {
+    background: #c00;
+    border: none;
+    color: white;
+    cursor: pointer;
+    border-radius: 3px;
+    padding: 2px 6px;
+  }
 
-    footer {
-      text-align: center;
-      padding: 20px;
-      background: #004a99;
-      color: white;
-      margin-top: 20px;
-    }
-  </style>
+  .events-section input {
+    padding: 5px;
+    margin-right: 5px;
+  }
+
+  footer {
+    height: var(--footer-h);
+    background: #004a99;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 20px;
+  }
+</style>
 </head>
 <body>
 
@@ -131,20 +152,57 @@
   </nav>
 </header>
 
-<!-- Шевици -->
-<div class="sidebar-left"></div>
-<div class="sidebar-right"></div>
+<div class="content-wrapper">
+  <div class="sidebar-left"></div>
+  <div class="sidebar-right"></div>
 
-<!-- Съдържание -->
-<main>
-  <h1>Добре дошли в “Мегданъ”</h1>
-  <p>Школа за български народни танци – мястото, където традицията оживява!</p>
-  <a href="contact.html">Запиши се</a>
-</main>
+  <main>
+    <!-- Добре дошли + лого -->
+    <div class="welcome-section">
+      <img src="logo-placeholder.png" alt="Лого" class="logo-placeholder">
+      <h1>Добре дошли в Мегданъ!</h1>
+    </div>
+
+    <!-- Информация за нас -->
+    <div class="info-section">
+      <h2>За нас</h2>
+      <p>Тук можеш да добавиш информация за залата, историята, курсовете и екипа.</p>
+    </div>
+
+    <!-- Минали и предстоящи събития -->
+    <div class="events-section">
+      <h2>Събития</h2>
+      <input type="text" id="newEvent" placeholder="Добави събитие">
+      <button onclick="addEvent()">Добави</button>
+      <ul class="event-list" id="eventList">
+        <!-- Новини ще се добавят тук -->
+      </ul>
+    </div>
+  </main>
+</div>
 
 <footer>
   <p>&copy; 2025 Мегданъ. Всички права запазени.</p>
 </footer>
+
+<script>
+function addEvent() {
+  const input = document.getElementById('newEvent');
+  const text = input.value.trim();
+  if (text === '') return;
+
+  const li = document.createElement('li');
+  li.textContent = text;
+
+  const btn = document.createElement('button');
+  btn.textContent = 'X';
+  btn.onclick = function() { li.remove(); };
+  li.appendChild(btn);
+
+  document.getElementById('eventList').appendChild(li);
+  input.value = '';
+}
+</script>
 
 </body>
 </html>
