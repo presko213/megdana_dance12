@@ -1,42 +1,172 @@
 <!DOCTYPE html>
 <html lang="bg">
 <head>
-    <meta charset="UTF-8">
-    <title>Курсове – Мегданъ</title>
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <title>За нас – Мегданъ</title>
+  <style>
+    :root{
+      --header-h: 60px;
+      --footer-h: 80px;
+      --sidebar-w: 150px;
+    }
+
+    * { box-sizing: border-box; }
+
+    html, body {
+      height: 100%;
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #f9f9f9;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Навигация */
+    header {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      height: var(--header-h);
+      background: #004a99;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 20px;
+      z-index: 3000;
+    }
+    header .logo { color: white; font-weight: bold; font-size: 20px; }
+    header nav ul { margin: 0; padding: 0; display: flex; list-style: none; }
+    header nav ul li { margin-left: 20px; }
+    header nav ul li a { color: white; text-decoration: none; font-weight: bold; }
+    header nav ul li a.active { text-decoration: underline; }
+
+    /* Обвивка */
+    .content-wrapper {
+      position: relative;
+      flex: 1;
+      padding-top: calc(var(--header-h) + 40px);
+      padding-bottom: 40px;
+    }
+
+    /* Шевици */
+    .sidebar-left,
+    .sidebar-right {
+      position: absolute;
+      top: var(--header-h);
+      bottom: 0;
+      width: var(--sidebar-w);
+      background-image: url('12.png');
+      background-repeat: repeat-y;
+      background-position: center top;
+      background-size: 500px auto;
+      z-index: 1000;
+      image-rendering: pixelated;
+    }
+    .sidebar-left  { left: 0; }
+    .sidebar-right { right: 0; transform: scaleX(-1); }
+
+    /* Основно съдържание */
+    main {
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 20px;
+      background: #fff;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      position: relative;
+      z-index: 1500;
+    }
+
+    /* Секции със снимка и текст */
+    .section {
+      display: flex;
+      align-items: flex-start;
+      gap: 20px;
+      margin-bottom: 40px;
+    }
+    .section img {
+      width: 300px;
+      height: 200px;
+      object-fit: cover;
+      border-radius: 10px;
+      box-shadow: 0 0 8px rgba(0,0,0,0.2);
+    }
+    .section .text {
+      flex: 1;
+    }
+    .section .text h2 {
+      margin-top: 0;
+      color: #004a99;
+    }
+
+    /* Футър – винаги долу */
+    footer {
+      height: var(--footer-h);
+      background: #004a99;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0 20px;
+      margin-top: auto;
+    }
+
+    @media (max-width: 768px) {
+      .section { flex-direction: column; align-items: center; }
+      .section img { width: 100%; height: auto; }
+    }
+  </style>
 </head>
 <body>
-<header>
-    <nav>
-        <div class="logo">Мегданъ</div>
-        <ul>
-            <li><a href="index.html" >Начало</a></li>
-            <li><a href="about.html" >За нас</a></li>
-            <li><a href="classes.html" class="active">Курсове</a></li>
-            <li><a href="gallery.html" >Галерия</a></li>
-            <li><a href="contact.html" >Контакти</a></li>
-        </ul>
-    </nav>
-</header>
-<main>
-    
-<aside class="sidebar">
-    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/19/Bulgarian_embroidery_motif.svg/1280px-Bulgarian_embroidery_motif.svg.png" alt="Българска шевица">
-</aside>
 
-    <section class="content">
-        
-        <h2>Нашите курсове</h2>
-        <ul>
-            <li>Начинаещи – понеделник и сряда, 18:30 ч.</li>
-            <li>Средно напреднали – вторник и четвъртък, 19:00 ч.</li>
-            <li>Деца – събота и неделя, 10:00 ч.</li>
-        </ul>
-    
-    </section>
-</main>
+<header>
+  <div class="logo">Мегданъ</div>
+  <nav>
+    <ul>
+      <li><a href="index.html">Начало</a></li>
+      <li><a href="about.html" class="active">За нас</a></li>
+      <li><a href="classes.html">Курсове</a></li>
+      <li><a href="gallery.html">Галерия</a></li>
+      <li><a href="contact.html">Контакти</a></li>
+    </ul>
+  </nav>
+</header>
+
+<div class="content-wrapper">
+  <div class="sidebar-left"></div>
+  <div class="sidebar-right"></div>
+
+  <main>
+    <h1>За нас</h1>
+
+    <div class="section">
+      <img src="snimka1.jpg" alt="Снимка 1">
+      <div class="text">
+        <h2>Нашата история</h2>
+        <p>Тук можеш да сложиш текст за историята на школата. Снимката вляво е snimka1.jpg, можеш да я смениш директно от конзолата или като смениш файла на сървъра.</p>
+      </div>
+    </div>
+
+    <div class="section">
+      <img src="snimka2.jpg" alt="Снимка 2">
+      <div class="text">
+        <h2>Нашата мисия</h2>
+        <p>Тук можеш да добавиш информация за мисията и ценностите. Снимката е snimka2.jpg.</p>
+      </div>
+    </div>
+
+    <div class="section">
+      <img src="snimka3.jpg" alt="Снимка 3">
+      <div class="text">
+        <h2>Нашият екип</h2>
+        <p>Място за текст за екипа или преподавателите. Снимката е snimka3.jpg.</p>
+      </div>
+    </div>
+  </main>
+</div>
+
 <footer>
-    <p>&copy; 2025 Мегданъ. Всички права запазени.</p>
+  <p>&copy; 2025 Мегданъ. Всички права запазени.</p>
 </footer>
+
 </body>
 </html>
