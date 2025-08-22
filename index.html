@@ -1,40 +1,40 @@
 <!DOCTYPE html>
 <html lang="bg">
 <head>
-  <meta charset="UTF-8">
-  <title>Начало – Мегданъ</title>
-  <style>
-    :root{--header-h:60px;--footer-h:80px;--sidebar-w:150px}
-    *{box-sizing:border-box}
-    html,body{margin:0;font-family:Arial,sans-serif;background:#f9f9f9}
-    header{position:fixed;top:0;left:0;right:0;height:var(--header-h);background:#004a99;display:flex;align-items:center;justify-content:space-between;padding:0 20px;z-index:3000}
-    header .logo{color:#fff;font-weight:bold;font-size:20px}
-    header nav ul{margin:0;padding:0;display:flex;list-style:none}
-    header nav ul li{margin-left:20px}
-    header nav ul li a{color:#fff;text-decoration:none;font-weight:bold}
-    header nav ul li a.active{text-decoration:underline}
-    .content-wrapper{position:relative;min-height:calc(100vh - var(--footer-h));padding-top:calc(var(--header-h) + 40px);padding-bottom:40px}
-    .sidebar-left,.sidebar-right{position:absolute;top:var(--header-h);bottom:0;width:var(--sidebar-w);background-image:url('12.png');background-repeat:repeat-y;background-position:center top;background-size:500px auto;z-index:1000;image-rendering:crisp-edges;image-rendering:-webkit-optimize-contrast;image-rendering:pixelated}
-    .sidebar-left{left:0}
-    .sidebar-right{right:0;transform:scaleX(-1)}
-    main{max-width:1200px;margin:0 auto 40px;padding:20px;background:#fff;border-radius:10px;box-shadow:0 0 10px rgba(0,0,0,0.1);position:relative;z-index:1500}
-    .welcome{position:relative;text-align:center;margin-bottom:40px}
-    .welcome img.logo{width:150px;height:auto;position:absolute;top:10px;left:20px}
-    .welcome h1{font-size:3em;color:#004a99;margin:0;padding:100px 20px 40px}
-    .about-us{margin-bottom:40px}
-    .about-us h2{color:#004a99;margin-bottom:10px}
-    .about-us p{font-size:1em;line-height:1.6;color:#333}
-    .news-section{margin-bottom:40px}
-    .news-section h2{color:#004a99;margin-bottom:20px;text-align:center}
-    .news-container{display:flex;flex-wrap:wrap;gap:20px;justify-content:center}
-    .news-card{background:#fff;border-radius:10px;box-shadow:0 4px 12px rgba(0,0,0,0.1);overflow:hidden;width:300px;display:flex;flex-direction:column}
-    .news-card img{width:100%;height:160px;object-fit:cover}
-    .news-card .content{padding:15px;flex:1;display:flex;flex-direction:column}
-    .news-card .content h3{margin:0 0 10px;font-size:1.2em;color:#004a99}
-    .news-card .content p{margin:0;font-size:0.95em;color:#333;flex:1}
-    footer{height:var(--footer-h);background:#004a99;color:#fff;display:flex;align-items:center;justify-content:center;padding:0 20px}
-    @media(max-height:540px){.content-wrapper{padding-top:calc(var(--header-h)+20px)}}
-  </style>
+<meta charset="UTF-8">
+<title>Начало – Мегданъ</title>
+<style>
+:root{--header-h:60px;--footer-h:80px;--sidebar-w:150px}
+*{box-sizing:border-box}
+html,body{margin:0;font-family:Arial,sans-serif;background:#f9f9f9}
+header{position:fixed;top:0;left:0;right:0;height:var(--header-h);background:#004a99;display:flex;align-items:center;justify-content:space-between;padding:0 20px;z-index:3000}
+header .logo{color:#fff;font-weight:bold;font-size:20px}
+header nav ul{margin:0;padding:0;display:flex;list-style:none}
+header nav ul li{margin-left:20px}
+header nav ul li a{color:#fff;text-decoration:none;font-weight:bold}
+header nav ul li a.active{text-decoration:underline}
+.content-wrapper{position:relative;min-height:calc(100vh - var(--footer-h));padding-top:calc(var(--header-h) + 40px);padding-bottom:40px}
+.sidebar-left,.sidebar-right{position:absolute;top:var(--header-h);bottom:0;width:var(--sidebar-w);background-image:url('12.png');background-repeat:repeat-y;background-position:center top;background-size:500px auto;z-index:1000;image-rendering:crisp-edges;image-rendering:-webkit-optimize-contrast;image-rendering:pixelated}
+.sidebar-left{left:0}
+.sidebar-right{right:0;transform:scaleX(-1)}
+main{max-width:1200px;margin:0 auto 40px;padding:20px;background:#fff;border-radius:10px;box-shadow:0 0 10px rgba(0,0,0,0.1);position:relative;z-index:1500}
+.welcome{position:relative;text-align:center;margin-bottom:40px}
+.welcome img.logo{width:150px;height:auto;position:absolute;top:10px;left:20px}
+.welcome h1{font-size:3em;color:#004a99;margin:0;padding:100px 20px 40px}
+.about-us{margin-bottom:40px}
+.about-us h2{color:#004a99;margin-bottom:10px}
+.about-us p{font-size:1em;line-height:1.6;color:#333}
+.news-section{margin-bottom:40px}
+.news-section h2{color:#004a99;margin-bottom:20px;text-align:center}
+.news-container{display:flex;flex-wrap:wrap;gap:20px;justify-content:center}
+.news-card{background:#fff;border-radius:10px;box-shadow:0 4px 12px rgba(0,0,0,0.1);overflow:hidden;width:300px;display:flex;flex-direction:column}
+.news-card img{width:100%;height:160px;object-fit:cover}
+.news-card .content{padding:15px;flex:1;display:flex;flex-direction:column}
+.news-card .content h3{margin:0 0 10px;font-size:1.2em;color:#004a99}
+.news-card .content p{margin:0;font-size:0.95em;color:#333;flex:1}
+footer{height:var(--footer-h);background:#004a99;color:#fff;display:flex;align-items:center;justify-content:center;padding:0 20px}
+@media(max-height:540px){.content-wrapper{padding-top:calc(var(--header-h)+20px)}}
+</style>
 </head>
 <body>
 <header>
@@ -72,26 +72,24 @@
 </footer>
 <script>
 async function loadNews(){
-  const url = "https://opensheet.elk.sh/2PACX-1vQQKNwPvEwST80Cqp_0Q5nETZam53WqjAWhQI1nPrSDznUsqNZAOFz03_rCAtV4GEhhdTBUbRj8CP7a/Sheet1";
-  try {
+  const url = "https://opensheet.elk.sh/2PACX-1vQQKNwPvEwST80Cqp_0Q5nETZam53WqjAWhQI1nPrSDznUsqNZAOFz03_rCAtV4GEhhdTBUbRj8CP7a/Лист1";
+  try{
     const res = await fetch(url);
     const data = await res.json();
     const container = document.getElementById("newsContainer");
     container.innerHTML = "";
-    data.reverse().forEach(item => {
+    data.reverse().forEach(row=>{
+      const keys = Object.keys(row);
+      const title = row[keys[0]] || "Няма заглавие";
+      const img = row[keys[1]] || "placeholder.png";
+      const text = row[keys[2]] || "";
       const card = document.createElement("div");
       card.className = "news-card";
-      card.innerHTML = `
-        <img src="${item["Снимка (URL)"] || 'placeholder.png'}" alt="Снимка">
-        <div class="content">
-          <h3>${item["Заглавие"]}</h3>
-          <p>${item["Текст"]}</p>
-        </div>
-      `;
+      card.innerHTML = `<img src="${img}" alt="Снимка"><div class="content"><h3>${title}</h3><p>${text}</p></div>`;
       container.appendChild(card);
     });
-  } catch(e){
-    console.error("Грешка при зареждане на новините:", e);
+  }catch(e){
+    console.error("Грешка при зареждане на новините:",e);
   }
 }
 loadNews();
