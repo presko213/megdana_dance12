@@ -2,172 +2,101 @@
 <html lang="bg">
 <head>
   <meta charset="UTF-8">
-  <title>Начало – Мегданъ</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Мегданъ</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <div class="page">
-    <!-- Хедър -->
-    <header>
-      <div class="logo">Мегданъ</div>
-      <nav>
-        <ul>
-          <li><a href="index.html" class="active">Начало</a></li>
-          <li><a href="about.html">За нас</a></li>
-          <li><a href="classes.html">Курсове</a></li>
-          <li><a href="gallery.html">Галерия</a></li>
-          <li><a href="contact.html">Контакти</a></li>
-        </ul>
-      </nav>
-    </header>
 
-    <!-- Шевици -->
-    <div class="sidebar-left"></div>
-    <div class="sidebar-right"></div>
+  <!-- HEADER -->
+  <header>
+    <div class="logo">Мегданъ</div>
+    <nav>
+      <ul>
+        <li><a href="index.html" class="active">Начало</a></li>
+        <li><a href="about.html">За нас</a></li>
+        <li><a href="classes.html">Курсове</a></li>
+        <li><a href="gallery.html">Галерия</a></li>
+        <li><a href="contact.html">Контакти</a></li>
+      </ul>
+    </nav>
+  </header>
 
-    <main>
-      <!-- Добре дошли -->
-      <section class="welcome">
-        <h1>Добре дошли!</h1>
-        <p>Традиции, култура и знание на едно място.</p>
-      </section>
+  <!-- СТРАНИЦА -->
+  <main>
+    <!-- ШЕВИЦА ЛЯВО -->
+    <aside class="sidebar left">
+      <img src="images/chevica.png" alt="Шевица">
+    </aside>
 
-      <!-- Карусел -->
-      <div class="card">
-        <h2>Нашите моменти</h2>
-        <div class="carousel" id="carousel"></div>
+    <!-- СЪДЪРЖАНИЕ -->
+    <section class="content">
+      <!-- CAROUSEL + ТЕКСТ -->
+      <div class="carousel-container">
+        <div class="carousel">
+          <img src="images/carousel1.jpg" class="active" alt="Снимка 1">
+          <img src="images/carousel2.jpg" alt="Снимка 2">
+          <img src="images/carousel3.jpg" alt="Снимка 3">
+        </div>
+        <div class="carousel-text">
+          <h2>Добре дошли в "Мегданъ"</h2>
+          <p>Тук ще намерите информация за нашите курсове по народни танци.</p>
+          <p>Заповядайте в нашата галерия и се запознайте с екипа.</p>
+          <p>Очакват ви новини за събития и участия.</p>
+        </div>
       </div>
 
-      <!-- Новини -->
-      <div class="card">
+      <!-- НОВИНИ -->
+      <section class="news">
         <h2>Новини</h2>
-        <div id="news" class="news-grid"></div>
-      </div>
-    </main>
+        <div class="news-container">
+          <div class="news-card">
+            <img src="images/news1.jpg" alt="Новина 1">
+            <h3>Нов курс</h3>
+            <p>Започва нов курс по народни танци за начинаещи.</p>
+          </div>
+          <div class="news-card">
+            <img src="images/news2.jpg" alt="Новина 2">
+            <h3>Събитие</h3>
+            <p>Участие във фолклорен фестивал тази неделя.</p>
+          </div>
+          <div class="news-card">
+            <img src="images/news3.jpg" alt="Новина 3">
+            <h3>Работилница</h3>
+            <p>Специална работилница за български хора и традиции.</p>
+          </div>
+        </div>
+      </section>
+    </section>
 
-    <!-- Футър -->
-    <footer>
-      <p>&copy; 2025 Мегданъ. Всички права запазени.</p>
-    </footer>
-  </div>
+    <!-- ШЕВИЦА ДЯСНО -->
+    <aside class="sidebar right">
+      <img src="images/chevica.png" alt="Шевица">
+    </aside>
+  </main>
 
-  <!-- Lightbox -->
-  <div id="lightbox" class="lightbox">
-    <span class="lightbox-close">&times;</span>
-    <span class="lightbox-prev">&#10094;</span>
-    <span class="lightbox-next">&#10095;</span>
-    <img class="lightbox-content" id="lightbox-img" referrerpolicy="no-referrer">
-  </div>
+  <!-- FOOTER -->
+  <footer>
+    <p>&copy; 2025 Мегданъ. Всички права запазени.</p>
+  </footer>
 
+  <!-- JS за carousel -->
   <script>
-    const FOLDER_ID = "1ezPV1iwcdYiKgo2fpytQREHw84XVxHpl";
-    const API_KEY   = "AIzaSyC4LnS2joLqzca_d48tKwe240ZtHq-4W-M";
-    const SHEET_ID  = "1LiN8HiJO6RNn098M2xwZtea3YjTZrji9GVtoH2x_F_o";
+    let currentSlide = 0;
+    const slides = document.querySelectorAll('.carousel img');
 
-    /* === КАРУСЕЛ (Google Drive) === */
-    const query  = encodeURIComponent(`'${FOLDER_ID}' in parents and mimeType contains 'image/' and trashed = false`);
-    const fields = encodeURIComponent('files(id,name,mimeType,thumbnailLink)');
-    const url    = `https://www.googleapis.com/drive/v3/files?q=${query}&fields=${fields}&key=${API_KEY}`;
-
-    const carousel = document.getElementById('carousel');
-    let carouselImages = [];
-    let carouselIndex = 0;
-    let carouselTimer;
-
-    function buildUrls(file) {
-      return {
-        primary: `https://www.googleapis.com/drive/v3/files/${file.id}?alt=media&key=${API_KEY}`,
-        uc: `https://drive.google.com/uc?export=view&id=${file.id}`,
-        thumb: file.thumbnailLink || "",
-        title: file.name
-      };
-    }
-
-    fetch(url).then(r => r.json()).then(data => {
-      if (!data.files || !data.files.length) return;
-      carouselImages = data.files.map(buildUrls);
-
-      carouselImages.forEach((img, i) => {
-        const el = new Image();
-        el.loading = "lazy";
-        el.className = i === 0 ? "active" : "";
-        el.src = img.primary;
-        el.onerror = () => { el.src = img.uc; };
-        el.addEventListener("click", () => {
-          carouselIndex = i;
-          openLightbox();
-        });
-        carousel.appendChild(el);
+    function showSlide(index) {
+      slides.forEach((slide, i) => {
+        slide.classList.remove('active');
+        if (i === index) slide.classList.add('active');
       });
-
-      carouselTimer = setInterval(nextSlide, 3000);
-    });
-
-    function nextSlide() {
-      const imgs = carousel.querySelectorAll("img");
-      imgs[carouselIndex].classList.remove("active");
-      carouselIndex = (carouselIndex + 1) % imgs.length;
-      imgs[carouselIndex].classList.add("active");
     }
 
-    /* === НОВИНИ (Google Sheets) === */
-    const newsEl = document.getElementById("news");
-    fetch(`https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:csv`)
-      .then(r => r.text())
-      .then(csv => {
-        const rows = csv.split("\n").map(r => r.split(","));
-        rows.slice(1).forEach(r => {
-          if (!r[0]) return;
-          let title = r[0];
-          let imgUrl = r[1];
-          let text = r[2];
-
-          // Превръщане на линк към директен Google Drive
-          const match = imgUrl.match(/[-\w]{25,}/);
-          if (match) imgUrl = `https://drive.google.com/uc?export=view&id=${match[0]}`;
-
-          const card = document.createElement("div");
-          card.className = "news-card";
-          card.innerHTML = `
-            <img src="${imgUrl}" alt="${title}" loading="lazy">
-            <h3>${title}</h3>
-            <p>${text}</p>
-          `;
-          newsEl.appendChild(card);
-        });
-      });
-
-    /* === LIGHTBOX === */
-    const lightbox      = document.getElementById("lightbox");
-    const lightboxImg   = document.getElementById("lightbox-img");
-    const lightboxClose = document.querySelector(".lightbox-close");
-    const lightboxPrev  = document.querySelector(".lightbox-prev");
-    const lightboxNext  = document.querySelector(".lightbox-next");
-    let currentIndex = 0;
-
-    function openLightbox() {
-      lightbox.style.display = "block";
-      showCurrent();
-    }
-    function showCurrent() {
-      const {primary, uc, thumb, title} = carouselImages[currentIndex];
-      lightboxImg.alt = title;
-      lightboxImg.src = primary;
-      lightboxImg.onerror = () => { lightboxImg.src = uc; };
-    }
-
-    lightboxClose.onclick = () => lightbox.style.display = "none";
-    lightbox.onclick = (e) => { if (e.target === lightbox) lightbox.style.display = "none"; };
-    lightboxPrev.onclick = () => { currentIndex = (currentIndex - 1 + carouselImages.length) % carouselImages.length; showCurrent(); };
-    lightboxNext.onclick = () => { currentIndex = (currentIndex + 1) % carouselImages.length; showCurrent(); };
-
-    document.addEventListener("keydown", (e) => {
-      if (lightbox.style.display === "block") {
-        if (e.key === "ArrowLeft")  { currentIndex = (currentIndex - 1 + carouselImages.length) % carouselImages.length; showCurrent(); }
-        if (e.key === "ArrowRight") { currentIndex = (currentIndex + 1) % carouselImages.length; showCurrent(); }
-        if (e.key === "Escape")     { lightbox.style.display = "none"; }
-      }
-    });
+    setInterval(() => {
+      currentSlide = (currentSlide + 1) % slides.length;
+      showSlide(currentSlide);
+    }, 3000);
   </script>
+
 </body>
 </html>
