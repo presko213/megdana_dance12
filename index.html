@@ -2,91 +2,170 @@
 <html lang="bg">
 <head>
   <meta charset="UTF-8">
-  <title>Новини</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Мегдана – Начало</title>
   <style>
     body {
-      font-family: Arial, sans-serif;
-      background: #f9f9f9;
       margin: 0;
-      padding: 20px;
+      font-family: Arial, sans-serif;
+      background-color: #fafafa;
     }
-    h1 {
-      text-align: center;
-      margin-bottom: 30px;
-    }
-    .news-container {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-      gap: 20px;
-    }
-    .news-card {
-      background: white;
-      border-radius: 12px;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-      overflow: hidden;
-      transition: transform 0.2s ease;
-    }
-    .news-card:hover {
-      transform: translateY(-5px);
-    }
-    .news-card img {
+
+    /* Шевици */
+    .shevici {
       width: 100%;
-      height: 200px;
-      object-fit: cover;
+      height: 40px;
+      background: repeating-linear-gradient(
+        45deg,
+        red,
+        red 10px,
+        white 10px,
+        white 20px,
+        green 20px,
+        green 30px,
+        white 30px,
+        white 40px
+      );
     }
-    .news-card-content {
-      padding: 15px;
+
+    /* Меню */
+    nav {
+      background: #800000;
+      padding: 10px 0;
     }
-    .news-card h3 {
-      margin: 0 0 10px;
-      font-size: 20px;
+    nav ul {
+      list-style: none;
+      display: flex;
+      justify-content: center;
+      margin: 0;
+      padding: 0;
+    }
+    nav ul li {
+      margin: 0 15px;
+    }
+    nav ul li a {
+      color: white;
+      text-decoration: none;
+      font-weight: bold;
+    }
+    nav ul li a:hover {
+      text-decoration: underline;
+    }
+
+    /* Основно съдържание */
+    .container {
+      max-width: 1000px;
+      margin: 20px auto;
+      padding: 20px;
+      background: white;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      border-radius: 8px;
+    }
+
+    /* Новини */
+    .news-section h2 {
+      text-align: center;
+      margin-bottom: 20px;
+      color: #800000;
+    }
+    .news-item {
+      border-bottom: 1px solid #ddd;
+      padding: 15px 0;
+      display: flex;
+      align-items: flex-start;
+    }
+    .news-item:last-child {
+      border-bottom: none;
+    }
+    .news-item img {
+      max-width: 120px;
+      margin-right: 15px;
+      border-radius: 6px;
+    }
+    .news-item h3 {
+      margin: 0;
       color: #333;
     }
-    .news-card p {
-      margin: 0;
+    .news-item p {
+      margin: 5px 0 0;
       color: #555;
-      font-size: 15px;
+    }
+
+    /* Футър */
+    footer {
+      text-align: center;
+      background: #800000;
+      color: white;
+      padding: 15px;
+      margin-top: 40px;
     }
   </style>
 </head>
 <body>
-  <h1>Новини</h1>
-  <div class="news-container" id="news"></div>
+
+  <div class="shevici"></div>
+
+  <!-- Меню -->
+  <nav>
+    <ul>
+      <li><a href="#">Начало</a></li>
+      <li><a href="#">За нас</a></li>
+      <li><a href="#">Галерия</a></li>
+      <li><a href="#">Контакти</a></li>
+    </ul>
+  </nav>
+
+  <div class="shevici"></div>
+
+  <!-- Основен контейнер -->
+  <div class="container">
+    <h1>Добре дошли в Мегдана!</h1>
+    <p>Тук ще намерите информация за нашите събития, репетиции и участия.</p>
+
+    <!-- Новини -->
+    <div class="news-section">
+      <h2>Новини и събития</h2>
+      <div id="news"></div>
+    </div>
+  </div>
+
+  <footer>
+    <p>&copy; 2025 Мегдана. Всички права запазени.</p>
+  </footer>
 
   <script>
-    const sheetID = "1LiN8HiJO6RNn098M2xwZtea3YjTZrji9GVtoH2x_F_o";
-    const sheetName = "Лист1";
-    const url = `https://docs.google.com/spreadsheets/d/${sheetID}/gviz/tq?tqx=out:json&sheet=${sheetName}`;
+    async function loadNews() {
+      const url = "https://docs.google.com/spreadsheets/d/e/2PACX-1vTHtL7GAyduwd23G3sfTvHv7BarPcAyPAj0RHmQv7D-D0muEWLnGCrg2iQlQxktSuNT1HrxJ-vVIXNr/pub?output=csv";
+      const response = await fetch(url);
+      const data = await response.text();
 
-    fetch(url)
-      .then(res => res.text())
-      .then(data => {
-        const json = JSON.parse(data.substr(47).slice(0, -2));
-        const rows = json.table.rows;
-        const newsContainer = document.getElementById("news");
+      const rows = data.split("\n").slice(1); // Пропускаме заглавния ред
+      let html = "";
 
-        rows.forEach((row, i) => {
-          if (i === 0) return; // прескачаме заглавния ред
+      rows.forEach(row => {
+        const cols = row.split(",");
+        if (cols.length >= 3) {
+          const title = cols[0];
+          const image = cols[1];
+          const text = cols[2];
 
-          const title = row.c[0]?.v || "";
-          const image = row.c[1]?.v || "";
-          const text = row.c[2]?.v || "";
-
-          const card = document.createElement("div");
-          card.className = "news-card";
-
-          card.innerHTML = `
-            <img src="${image}" alt="${title}">
-            <div class="news-card-content">
-              <h3>${title}</h3>
-              <p>${text}</p>
+          html += `
+            <div class="news-item">
+              ${image ? `<img src="${image}" alt="Снимка">` : ""}
+              <div>
+                <h3>${title}</h3>
+                <p>${text}</p>
+              </div>
             </div>
           `;
+        }
+      });
 
-          newsContainer.appendChild(card);
-        });
-      })
-      .catch(err => console.error("Грешка при зареждане на данните:", err));
+      document.getElementById("news").innerHTML = html || "<p>Няма налични новини.</p>";
+    }
+
+    loadNews();
   </script>
+
 </body>
 </html>
