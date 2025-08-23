@@ -2,211 +2,194 @@
 <html lang="bg">
 <head>
   <meta charset="UTF-8">
-  <title>Добре дошли</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Мегданъ – Начало</title>
+  <link rel="stylesheet" href="style.css">
   <style>
     body {
       margin: 0;
       font-family: Arial, sans-serif;
-      background: #fdfdfd;
-      color: #333;
+      background: #f9f9f9;
     }
+    .page { min-height: 100vh; display: flex; flex-direction: column; }
 
+    /* Хедър */
     header {
-      position: relative;
-      text-align: center;
-      color: white;
-      background: rgba(0,0,0,0.6);
+      position: fixed; top: 0; left: 0; right: 0;
+      height: 60px; background: #004a99;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 20px; z-index: 3000;
     }
+    header .logo { color: #fff; font-weight: bold; font-size: 20px; display: flex; align-items: center; gap: 10px; }
+    header .logo img { height: 40px; }
+    header nav ul { margin: 0; padding: 0; list-style: none; display: flex; gap: 20px; }
+    header nav a { color: #fff; text-decoration: none; font-weight: bold; }
+    header nav a.active, header nav a:hover { text-decoration: underline; }
 
-    header h1 {
-      font-size: 3em;
-      padding: 60px 20px;
-      margin: 0;
-      background: url("logo.png") center/contain no-repeat;
-      background-size: 200px;
+    /* Шевици */
+    .sidebar-left, .sidebar-right {
+      width: 150px;
+      background-image: url('12.png');
+      background-repeat: repeat-y;
       background-position: center;
+      background-size: 500px auto;
+      position: absolute; top: 60px; bottom: 0; z-index: 0;
     }
+    .sidebar-left  { left: 0; }
+    .sidebar-right { right: 0; transform: scaleX(-1); }
 
-    nav {
-      background: #800000;
-      padding: 10px;
-      text-align: center;
-    }
+    /* Основно съдържание */
+    main { flex: 1; margin: 80px 170px 30px; position: relative; z-index: 1; }
 
-    nav a {
-      color: white;
-      margin: 0 15px;
-      text-decoration: none;
-      font-weight: bold;
-    }
+    h2 { text-align: center; margin: 20px 0; color: #004a99; }
 
-    .slogan {
-      text-align: center;
-      padding: 40px 20px;
-    }
-
-    .slogan h2 {
-      font-size: 2em;
-      margin-bottom: 10px;
-    }
-
-    .carousel {
-      width: 100%;
-      max-width: 900px;
-      margin: 20px auto;
+    /* Новини */
+    .news-container { display: grid; gap: 20px; }
+    .news-item {
+      display: flex; flex-direction: column; background: #fff;
+      border-radius: 10px; box-shadow: 0 0 10px rgba(0,0,0,0.1);
       overflow: hidden;
-      border-radius: 12px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
     }
+    .news-item img { width: 100%; height: auto; display: block; }
+    .news-text { padding: 15px; }
+    .news-title { font-size: 18px; font-weight: bold; color: #004a99; margin-bottom: 10px; }
+    .news-desc { font-size: 14px; color: #333; }
 
-    .carousel img {
-      width: 100%;
-      display: none;
-    }
+    /* Галерия */
+    .gallery { display: grid; grid-template-columns: repeat(auto-fill,minmax(250px,1fr)); gap: 20px; }
+    .gallery-item { background: #fff; border-radius: 10px; box-shadow: 0 0 10px rgba(0,0,0,0.1); overflow: hidden; text-align: center; transition: transform .2s; cursor: pointer; }
+    .gallery-item:hover { transform: scale(1.03); }
+    .gallery-item img { width: 100%; height: auto; display: block; }
+    .gallery-item p { padding: 10px; font-size: 14px; color: #333; }
 
-    .carousel img.active {
-      display: block;
-      animation: fade 1s ease-in-out;
-    }
+    /* Футър */
+    footer { background: #004a99; color: #fff; text-align: center; padding: 15px; position: relative; z-index: 1; }
 
-    @keyframes fade {
-      from {opacity: 0.4}
-      to {opacity: 1}
-    }
-
-    .news {
-      max-width: 1000px;
-      margin: 40px auto;
-      padding: 20px;
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 20px;
-    }
-
-    .card {
-      border: 1px solid #ccc;
-      border-radius: 10px;
-      overflow: hidden;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-      background: white;
-    }
-
-    .card img {
-      width: 100%;
-      height: 200px;
-      object-fit: cover;
-    }
-
-    .card h3 {
-      margin: 10px;
-      font-size: 1.3em;
-    }
-
-    .card p {
-      margin: 10px;
-      font-size: 1em;
-      color: #444;
-    }
-
-    footer {
-      background: #800000;
-      color: white;
-      text-align: center;
-      padding: 20px;
-      margin-top: 40px;
+    @media (max-width: 900px) {
+      .sidebar-left, .sidebar-right { display: none; }
+      main { margin: 80px 20px 30px; }
     }
   </style>
 </head>
 <body>
+  <div class="page">
+    <header>
+      <div class="logo">
+        <img src="logo.png" alt="Лого">
+        Мегданъ
+      </div>
+      <nav>
+        <ul>
+          <li><a href="index.html" class="active">Начало</a></li>
+          <li><a href="about.html">За нас</a></li>
+          <li><a href="classes.html">Курсове</a></li>
+          <li><a href="gallery.html">Галерия</a></li>
+          <li><a href="contact.html">Контакти</a></li>
+        </ul>
+      </nav>
+    </header>
 
-  <header>
-    <h1>Добре дошли</h1>
-  </header>
+    <!-- Шевици -->
+    <div class="sidebar-left"></div>
+    <div class="sidebar-right"></div>
 
-  <nav>
-    <a href="#">Начало</a>
-    <a href="#">За нас</a>
-    <a href="#">Новини</a>
-    <a href="#">Контакти</a>
-  </nav>
+    <main>
+      <!-- Новини -->
+      <section>
+        <h2>Новини</h2>
+        <div class="news-container" id="news"></div>
+      </section>
 
-  <section class="slogan">
-    <h2>Нашият слоган</h2>
-    <p>Тук можете да добавите общ текст за вашата организация, група или дейност. Това е мястото за представяне пред посетителите.</p>
-  </section>
+      <!-- Галерия -->
+      <section>
+        <h2>Галерия</h2>
+        <div class="gallery" id="gallery"></div>
+      </section>
+    </main>
 
-  <!-- Карусел със снимки от Drive -->
-  <div class="carousel" id="carousel"></div>
-
-  <!-- Новини от Google Sheets -->
-  <section class="news" id="news"></section>
-
-  <footer>
-    <p>© 2025 Всички права запазени | Сайт със шевици и любов</p>
-  </footer>
+    <footer>
+      <p>&copy; 2025 Мегданъ. Всички права запазени.</p>
+    </footer>
+  </div>
 
   <script>
-    // --------- GOOGLE SHEETS ---------
-    const sheetURL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vTHtL7GAyduwd23G3sfTvHv7BarPcAyPAj0RHmQv7D-D0muEWLnGCrg2iQlQxktSuNT1HrxJ-vVIXNr/pub?output=csv";
-
-    function convertDriveLink(url) {
-      if (!url) return "";
-      let fileIdMatch = url.match(/[-\w]{25,}/);
-      if (fileIdMatch) {
-        return `https://drive.google.com/uc?export=view&id=${fileIdMatch[0]}`;
-      }
-      return url; // ако е директен линк
-    }
+    /** --- Новини от Google Sheets --- **/
+    const sheetURL = "https://docs.google.com/spreadsheets/d/1LiN8HiJO6RNn098M2xwZtea3YjTZrji9GVtoH2x_F_o/gviz/tq?tqx=out:json";
+    const newsEl = document.getElementById("news");
 
     fetch(sheetURL)
       .then(res => res.text())
-      .then(csv => {
-        let rows = csv.split("\n").slice(1); 
-        let newsHTML = "";
+      .then(text => {
+        const json = JSON.parse(text.substr(47).slice(0, -2));
+        const rows = json.table.rows;
         rows.forEach(row => {
-          let cols = row.split(",");
-          if (cols.length >= 3) {
-            let title = cols[0];
-            let imgUrl = convertDriveLink(cols[1]);
-            let text = cols.slice(2).join(",");
-            newsHTML += `
-              <div class="card">
-                <img src="${imgUrl}" alt="Новина">
-                <h3>${title}</h3>
-                <p>${text}</p>
-              </div>
-            `;
+          const title = row.c[0]?.v || "";
+          const desc  = row.c[1]?.v || "";
+          const img   = row.c[2]?.v || "";
+
+          const item = document.createElement("div");
+          item.className = "news-item";
+
+          if (img) {
+            const imgEl = new Image();
+            imgEl.src = img.replace("/open?", "/uc?export=view&");
+            item.appendChild(imgEl);
           }
+
+          const textBox = document.createElement("div");
+          textBox.className = "news-text";
+          textBox.innerHTML = `<div class="news-title">${title}</div><div class="news-desc">${desc}</div>`;
+          item.appendChild(textBox);
+
+          newsEl.appendChild(item);
         });
-        document.getElementById("news").innerHTML = newsHTML;
+      })
+      .catch(err => {
+        console.error(err);
+        newsEl.innerHTML = "<p>Грешка при зареждане на новини.</p>";
       });
 
-    // --------- GOOGLE DRIVE CAROUSEL ---------
+    /** --- Галерия от Google Drive --- **/
     const FOLDER_ID = "1ezPV1iwcdYiKgo2fpytQREHw84XVxHpl";
-    const API_KEY = "AIzaSyC4LnS2joLqzca_d48tKwe240ZtHq-4W-M";
+    const API_KEY   = "AIzaSyC4LnS2joLqzca_d48tKwe240ZtHq-4W-M";
+    const galleryEl = document.getElementById('gallery');
 
-    fetch(`https://www.googleapis.com/drive/v3/files?q='${FOLDER_ID}'+in+parents&key=${API_KEY}&fields=files(id,name,mimeType)`)
-      .then(res => res.json())
+    const query  = encodeURIComponent(`'${FOLDER_ID}' in parents and mimeType contains 'image/' and trashed = false`);
+    const fields = encodeURIComponent('files(id,name,mimeType,thumbnailLink)');
+    const url    = `https://www.googleapis.com/drive/v3/files?q=${query}&fields=${fields}&key=${API_KEY}`;
+
+    fetch(url)
+      .then(r => r.json())
       .then(data => {
-        let files = data.files.filter(f => f.mimeType.startsWith("image/"));
-        let carousel = document.getElementById("carousel");
-        let i = 0;
-        files.forEach((file, index) => {
-          let img = document.createElement("img");
-          img.src = `https://drive.google.com/uc?export=view&id=${file.id}`;
-          if (index === 0) img.classList.add("active");
-          carousel.appendChild(img);
-        });
+        if (!data.files || !data.files.length) {
+          galleryEl.innerHTML = "<p>Няма снимки в галерията.</p>";
+          return;
+        }
+        data.files.forEach(file => {
+          const primary = `https://www.googleapis.com/drive/v3/files/${file.id}?alt=media&key=${API_KEY}`;
+          const uc      = `https://drive.google.com/uc?export=view&id=${file.id}`;
+          const thumb   = file.thumbnailLink || "";
 
-        setInterval(() => {
-          let images = carousel.querySelectorAll("img");
-          images[i].classList.remove("active");
-          i = (i + 1) % images.length;
-          images[i].classList.add("active");
-        }, 3000);
+          const item = document.createElement("div");
+          item.className = "gallery-item";
+
+          const imgEl = new Image();
+          imgEl.src = primary;
+          imgEl.onerror = () => {
+            imgEl.onerror = () => {
+              if (thumb) { imgEl.src = thumb; }
+            };
+            imgEl.src = uc;
+          };
+
+          item.appendChild(imgEl);
+          item.innerHTML += `<p>${file.name.replace(/\.[^/.]+$/, "")}</p>`;
+          galleryEl.appendChild(item);
+        });
+      })
+      .catch(err => {
+        console.error(err);
+        galleryEl.innerHTML = "<p>Грешка при зареждане на галерия.</p>";
       });
   </script>
-
 </body>
 </html>
