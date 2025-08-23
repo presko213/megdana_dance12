@@ -1,100 +1,92 @@
 <!DOCTYPE html>
 <html lang="bg">
 <head>
-<meta charset="UTF-8">
-<title>Начало – Мегданъ</title>
-<style>
-:root{--header-h:60px;--footer-h:80px;--sidebar-w:150px}
-*{box-sizing:border-box}
-html,body{margin:0;font-family:Arial,sans-serif;background:#f9f9f9}
-header{position:fixed;top:0;left:0;right:0;height:var(--header-h);background:#004a99;display:flex;align-items:center;justify-content:space-between;padding:0 20px;z-index:3000}
-header .logo{color:#fff;font-weight:bold;font-size:20px}
-header nav ul{margin:0;padding:0;display:flex;list-style:none}
-header nav ul li{margin-left:20px}
-header nav ul li a{color:#fff;text-decoration:none;font-weight:bold}
-header nav ul li a.active{text-decoration:underline}
-.content-wrapper{position:relative;min-height:calc(100vh - var(--footer-h));padding-top:calc(var(--header-h) + 40px);padding-bottom:40px}
-.sidebar-left,.sidebar-right{position:absolute;top:var(--header-h);bottom:0;width:var(--sidebar-w);background-image:url('12.png');background-repeat:repeat-y;background-position:center top;background-size:500px auto;z-index:1000;image-rendering:crisp-edges;image-rendering:-webkit-optimize-contrast;image-rendering:pixelated}
-.sidebar-left{left:0}
-.sidebar-right{right:0;transform:scaleX(-1)}
-main{max-width:1200px;margin:0 auto 40px;padding:20px;background:#fff;border-radius:10px;box-shadow:0 0 10px rgba(0,0,0,0.1);position:relative;z-index:1500}
-.welcome{position:relative;text-align:center;margin-bottom:40px}
-.welcome img.logo{width:150px;height:auto;position:absolute;top:10px;left:20px}
-.welcome h1{font-size:3em;color:#004a99;margin:0;padding:100px 20px 40px}
-.about-us{margin-bottom:40px}
-.about-us h2{color:#004a99;margin-bottom:10px}
-.about-us p{font-size:1em;line-height:1.6;color:#333}
-.news-section{margin-bottom:40px}
-.news-section h2{color:#004a99;margin-bottom:20px;text-align:center}
-.news-container{display:flex;flex-wrap:wrap;gap:20px;justify-content:center}
-.news-card{background:#fff;border-radius:10px;box-shadow:0 4px 12px rgba(0,0,0,0.1);overflow:hidden;width:300px;display:flex;flex-direction:column}
-.news-card img{width:100%;height:160px;object-fit:cover}
-.news-card .content{padding:15px;flex:1;display:flex;flex-direction:column}
-.news-card .content h3{margin:0 0 10px;font-size:1.2em;color:#004a99}
-.news-card .content p{margin:0;font-size:0.95em;color:#333;flex:1}
-footer{height:var(--footer-h);background:#004a99;color:#fff;display:flex;align-items:center;justify-content:center;padding:0 20px}
-@media(max-height:540px){.content-wrapper{padding-top:calc(var(--header-h)+20px)}}
-</style>
+  <meta charset="UTF-8">
+  <title>Новини</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f9f9f9;
+      margin: 0;
+      padding: 20px;
+    }
+    h1 {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+    .news-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 20px;
+    }
+    .news-card {
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+      overflow: hidden;
+      transition: transform 0.2s ease;
+    }
+    .news-card:hover {
+      transform: translateY(-5px);
+    }
+    .news-card img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+    }
+    .news-card-content {
+      padding: 15px;
+    }
+    .news-card h3 {
+      margin: 0 0 10px;
+      font-size: 20px;
+      color: #333;
+    }
+    .news-card p {
+      margin: 0;
+      color: #555;
+      font-size: 15px;
+    }
+  </style>
 </head>
 <body>
-<header>
-  <div class="logo">Мегданъ</div>
-  <nav>
-    <ul>
-      <li><a href="index.html" class="active">Начало</a></li>
-      <li><a href="about.html">За нас</a></li>
-      <li><a href="classes.html">Курсове</a></li>
-      <li><a href="gallery.html">Галерия</a></li>
-      <li><a href="contact.html">Контакти</a></li>
-    </ul>
-  </nav>
-</header>
-<div class="content-wrapper">
-  <div class="sidebar-left"></div>
-  <div class="sidebar-right"></div>
-  <main>
-    <div class="welcome">
-      <img src="logo.png" alt="Лого" class="logo">
-      <h1>Добре дошли в Мегданъ!</h1>
-    </div>
-    <div class="about-us">
-      <h2>За нас</h2>
-      <p>Мегданъ е школа за народни танци с дългогодишна традиция. Тук учениците откриват радостта от движението, съчетана с българския дух и култура.</p>
-    </div>
-    <div class="news-section">
-      <h2>Новини и събития</h2>
-      <div id="newsContainer" class="news-container"></div>
-    </div>
-  </main>
-</div>
-<footer>
-  <p>&copy; 2025 Мегданъ. Всички права запазени.</p>
-</footer>
-<script>
-async function loadNews(){
-  const url = "https://opensheet.elk.sh/2PACX-1vQQKNwPvEwST80Cqp_0Q5nETZam53WqjAWhQI1nPrSDznUsqNZAOFz03_rCAtV4GEhhdTBUbRj8CP7a/Лист1";
-  try{
-    const res = await fetch(url);
-    const data = await res.json();
-    console.log("Данни от Google Sheet:", data); // виж в конзолата
-    const container = document.getElementById("newsContainer");
-    container.innerHTML = "";
-    data.reverse().forEach(row=>{
-      // Взема първата колона като заглавие, втора като снимка, трета като текст
-      const keys = Object.keys(row);
-      const title = row[keys[0]] || "Няма заглавие";
-      const img = row[keys[1]] || "placeholder.png";
-      const text = row[keys[2]] || "";
-      const card = document.createElement("div");
-      card.className = "news-card";
-      card.innerHTML = `<img src="${img}" alt="Снимка"><div class="content"><h3>${title}</h3><p>${text}</p></div>`;
-      container.appendChild(card);
-    });
-  }catch(e){
-    console.error("Грешка при зареждане на новините:", e);
-  }
-}
-loadNews();
-</script>
+  <h1>Новини</h1>
+  <div class="news-container" id="news"></div>
+
+  <script>
+    const sheetID = "1LiN8HiJO6RNn098M2xwZtea3YjTZrji9GVtoH2x_F_o";
+    const sheetName = "Лист1";
+    const url = `https://docs.google.com/spreadsheets/d/${sheetID}/gviz/tq?tqx=out:json&sheet=${sheetName}`;
+
+    fetch(url)
+      .then(res => res.text())
+      .then(data => {
+        const json = JSON.parse(data.substr(47).slice(0, -2));
+        const rows = json.table.rows;
+        const newsContainer = document.getElementById("news");
+
+        rows.forEach((row, i) => {
+          if (i === 0) return; // прескачаме заглавния ред
+
+          const title = row.c[0]?.v || "";
+          const image = row.c[1]?.v || "";
+          const text = row.c[2]?.v || "";
+
+          const card = document.createElement("div");
+          card.className = "news-card";
+
+          card.innerHTML = `
+            <img src="${image}" alt="${title}">
+            <div class="news-card-content">
+              <h3>${title}</h3>
+              <p>${text}</p>
+            </div>
+          `;
+
+          newsContainer.appendChild(card);
+        });
+      })
+      .catch(err => console.error("Грешка при зареждане на данните:", err));
+  </script>
 </body>
 </html>
