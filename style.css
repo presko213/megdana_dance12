@@ -1,271 +1,129 @@
-/* =============================== */
-/* ОБЩИ СТИЛОВЕ                    */
-/* =============================== */
+/* HEADER */
+header {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  height: 60px;
+  background: #004a99;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 20px;
+  z-index: 3000;
+}
+header .logo {
+  color: white;
+  font-weight: bold;
+  font-size: 20px;
+}
+header nav ul {
+  margin: 0; padding: 0;
+  display: flex;
+  list-style: none;
+}
+header nav ul li { margin-left: 20px; }
+header nav ul li a {
+  color: white;
+  text-decoration: none;
+  font-weight: bold;
+}
+header nav ul li a.active {
+  text-decoration: underline;
+}
 
+/* BODY */
 body {
-    margin: 0;
-    font-family: sans-serif;
-    background-color: #f9f9f9;
-    color: #111;
+  margin: 0;
+  font-family: sans-serif;
+  background-color: #f9f9f9;
+  color: #111;
+  padding-top: 60px; /* колкото е header-a */
 }
-
-nav {
-    background-color: #003c7e;
-    color: white;
-    padding: 10px 20px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-nav ul {
-    list-style: none;
-    display: flex;
-    gap: 15px;
-    padding: 0;
-    margin: 0;
-}
-
-nav a {
-    color: white;
-    text-decoration: none;
-}
-
-nav a.active {
-    border-bottom: 2px solid white;
-}
-
-.logo {
-    font-weight: bold;
-}
-
 main {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 40px 20px;
-    position: relative;
-    z-index: 1;
+  display: flex;
+  min-height: 100vh;
 }
 
+/* ШЕВИЦИ */
 .sidebar {
-    width: 80px;
-    background-color: white;
-    border-right: 1px solid #ccc;
+  width: 80px;
+  background-color: white;
+  border-right: 1px solid #ccc;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
-
+.sidebar.right { border-right: none; border-left: 1px solid #ccc; }
 .sidebar img {
-    width: 100%;
-    height: auto;
-    display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
+/* CONTENT */
 .content {
-    flex: 1;
-    padding: 40px 20px;
-    max-width: 1000px;
+  flex: 1;
+  padding: 40px 20px;
+  max-width: 1000px;
+  margin: 0 auto;
 }
 
-.gallery {
-    display: flex;
-    gap: 10px;
-    flex-wrap: wrap;
+/* CAROUSEL + TEXT */
+.carousel-container {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 20px;
+  max-width: 1000px;
+  margin: 40px auto;
 }
-
-.gallery img {
-    width: 300px;
-    height: auto;
-}
-
-form {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    max-width: 400px;
-}
-
-input, textarea, select {
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-}
-
-button {
-    background-color: #003c7e;
-    color: white;
-    border: none;
-    padding: 10px;
-    border-radius: 4px;
-    cursor: pointer;
-}
-
-footer {
-    background-color: #002d5d;
-    color: white;
-    text-align: center;
-    padding: 20px;
-}
-
-.btn {
-    background-color: #003c7e;
-    color: white;
-    padding: 10px 20px;
-    text-decoration: none;
-    display: inline-block;
-    margin-top: 20px;
-    border-radius: 5px;
-}
-
-.choreographers {
-    display: flex;
-    gap: 20px;
-    flex-wrap: wrap;
-    justify-content: center;
-}
-
-.profile {
-    text-align: center;
-    max-width: 200px;
-}
-
-.profile img {
-    width: 100%;
-    border-radius: 10px;
-}
-
-/* =============================== */
-/* НАЧАЛНА СТРАНИЦА (index.html)   */
-/* =============================== */
-
-/* Добре дошли секция */
-.welcome {
-    text-align: center;
-    padding: 60px 20px;
-    background: url('logo.png') no-repeat center;
-    background-size: 200px;
-}
-.welcome h1 {
-    font-size: 36px;
-    color: #003c7e;
-    margin-bottom: 10px;
-}
-.welcome p {
-    font-size: 18px;
-    color: #333;
-}
-
-/* Карта за съдържание */
-.card {
-    width: 100%;
-    max-width: 1000px;
-    margin: 0 auto 40px;
-    background: #fff;
-    border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0,0,0,0.1);
-    padding: 20px;
-}
-.card h2 {
-    text-align: center;
-    margin-bottom: 20px;
-    color: #003c7e;
-}
-
-/* Карусел */
 .carousel {
-    position: relative;
-    max-width: 800px;
-    margin: 30px auto;
-    overflow: hidden;
-    border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0,0,0,0.2);
+  flex: 1;
+  max-width: 500px;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 0 10px rgba(0,0,0,0.2);
 }
 .carousel img {
-    width: 100%;
-    display: none;
+  width: 100%;
+  display: none;
 }
-.carousel img.active {
-    display: block;
+.carousel img.active { display: block; }
+.carousel-text {
+  flex: 1;
+  max-width: 400px;
+  font-size: 16px;
+  line-height: 1.6;
+  color: #333;
 }
 
-/* Новини */
-.news-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-    gap: 20px;
+/* NEWS */
+.news {
+  margin-top: 60px;
+}
+.news h2 { text-align: center; }
+.news-container {
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+  flex-wrap: wrap;
 }
 .news-card {
-    background: #fff;
-    border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0,0,0,0.1);
-    overflow: hidden;
+  background: white;
+  border-radius: 10px;
+  padding: 15px;
+  width: 300px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
 }
 .news-card img {
-    width: 100%;
-    height: 180px;
-    object-fit: cover;
+  width: 100%;
+  border-radius: 8px;
 }
-.news-card h3 {
-    margin: 10px;
-    color: #003c7e;
-}
-.news-card p {
-    margin: 10px;
-    font-size: 14px;
-    color: #333;
-}
+.news-card h3 { margin: 10px 0 5px; }
 
-/* Lightbox */
-.lightbox {
-    display: none;
-    position: fixed;
-    z-index: 5000;
-    left: 0; top: 0;
-    width: 100%; height: 100%;
-    overflow: auto;
-    background: rgba(0,0,0,0.9);
-}
-.lightbox-content {
-    margin: 5% auto;
-    display: block;
-    max-width: 90%;
-    max-height: 80vh;
-    border-radius: 10px;
-    box-shadow: 0 0 20px #000;
-}
-.lightbox-close {
-    position: absolute;
-    top: 20px; right: 35px;
-    color: #fff; font-size: 40px;
-    font-weight: bold; cursor: pointer;
-    transition: .3s;
-}
-.lightbox-close:hover { color: #ccc; }
-.lightbox-prev, .lightbox-next {
-    cursor: pointer;
-    position: absolute;
-    top: 50%; padding: 16px; margin-top: -50px;
-    color: #fff; font-weight: bold; font-size: 40px;
-    transition: .3s; user-select: none;
-}
-.lightbox-prev { left: 20px; }
-.lightbox-next { right: 20px; }
-.lightbox-prev:hover, .lightbox-next:hover { color: #ccc; }
-
-/* Шевици */
-.sidebar-left, .sidebar-right {
-    width: 150px;
-    background-image: url('12.png');
-    background-repeat: repeat-y;
-    background-position: center;
-    background-size: 500px auto;
-    position: absolute;
-    top: 60px;
-    bottom: 0;
-    z-index: 0;
-}
-.sidebar-left  { left: 0; }
-.sidebar-right { right: 0; transform: scaleX(-1); }
-
-@media (max-width: 900px) {
-    .sidebar-left, .sidebar-right { display: none; }
+/* FOOTER */
+footer {
+  background-color: #002d5d;
+  color: white;
+  text-align: center;
+  padding: 20px;
 }
