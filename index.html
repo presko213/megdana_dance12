@@ -1,195 +1,188 @@
 <!DOCTYPE html>
 <html lang="bg">
 <head>
-  <meta charset="UTF-8">
-  <title>Мегданъ – Начало</title>
-  <link rel="stylesheet" href="style.css">
-  <style>
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background: #f9f9f9;
-    }
-    .page { min-height: 100vh; display: flex; flex-direction: column; }
-
-    /* Хедър */
-    header {
-      position: fixed; top: 0; left: 0; right: 0;
-      height: 60px; background: #004a99;
-      display: flex; align-items: center; justify-content: space-between;
-      padding: 0 20px; z-index: 3000;
-    }
-    header .logo { color: #fff; font-weight: bold; font-size: 20px; display: flex; align-items: center; gap: 10px; }
-    header .logo img { height: 40px; }
-    header nav ul { margin: 0; padding: 0; list-style: none; display: flex; gap: 20px; }
-    header nav a { color: #fff; text-decoration: none; font-weight: bold; }
-    header nav a.active, header nav a:hover { text-decoration: underline; }
-
-    /* Шевици */
-    .sidebar-left, .sidebar-right {
-      width: 150px;
-      background-image: url('12.png');
-      background-repeat: repeat-y;
-      background-position: center;
-      background-size: 500px auto;
-      position: absolute; top: 60px; bottom: 0; z-index: 0;
-    }
-    .sidebar-left  { left: 0; }
-    .sidebar-right { right: 0; transform: scaleX(-1); }
-
-    /* Основно съдържание */
-    main { flex: 1; margin: 80px 170px 30px; position: relative; z-index: 1; }
-
-    h2 { text-align: center; margin: 20px 0; color: #004a99; }
-
-    /* Новини */
-    .news-container { display: grid; gap: 20px; }
-    .news-item {
-      display: flex; flex-direction: column; background: #fff;
-      border-radius: 10px; box-shadow: 0 0 10px rgba(0,0,0,0.1);
-      overflow: hidden;
-    }
-    .news-item img { width: 100%; height: auto; display: block; }
-    .news-text { padding: 15px; }
-    .news-title { font-size: 18px; font-weight: bold; color: #004a99; margin-bottom: 10px; }
-    .news-desc { font-size: 14px; color: #333; }
-
-    /* Галерия */
-    .gallery { display: grid; grid-template-columns: repeat(auto-fill,minmax(250px,1fr)); gap: 20px; }
-    .gallery-item { background: #fff; border-radius: 10px; box-shadow: 0 0 10px rgba(0,0,0,0.1); overflow: hidden; text-align: center; transition: transform .2s; cursor: pointer; }
-    .gallery-item:hover { transform: scale(1.03); }
-    .gallery-item img { width: 100%; height: auto; display: block; }
-    .gallery-item p { padding: 10px; font-size: 14px; color: #333; }
-
-    /* Футър */
-    footer { background: #004a99; color: #fff; text-align: center; padding: 15px; position: relative; z-index: 1; }
-
-    @media (max-width: 900px) {
-      .sidebar-left, .sidebar-right { display: none; }
-      main { margin: 80px 20px 30px; }
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Мегданъ - Добре дошли</title>
+    <style>
+        /* --- Основни стилове --- */
+        body {
+            margin: 0;
+            font-family: 'Arial', sans-serif;
+            background: #fdfcf8;
+        }
+        header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: #fff;
+            border-bottom: 2px solid #d3b373;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 10px 50px;
+            z-index: 1000;
+        }
+        header nav a {
+            margin: 0 15px;
+            text-decoration: none;
+            color: #333;
+            font-weight: bold;
+        }
+        main {
+            padding: 120px 50px 50px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        h1 {
+            text-align: center;
+            font-size: 3em;
+            margin-bottom: 10px;
+        }
+        .slogan {
+            text-align: center;
+            font-size: 1.2em;
+            margin-bottom: 40px;
+        }
+        /* --- Слайдер --- */
+        .slider {
+            display: flex;
+            overflow-x: auto;
+            gap: 10px;
+            scroll-behavior: smooth;
+            margin-bottom: 40px;
+        }
+        .slider img {
+            width: 300px;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 10px;
+            flex-shrink: 0;
+        }
+        /* --- Новини --- */
+        .news-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+        }
+        .news-card {
+            background: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+        .news-card img {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+        }
+        .news-card h3 {
+            margin: 15px;
+            font-size: 1.2em;
+        }
+        .news-card p {
+            margin: 0 15px 15px;
+            font-size: 1em;
+            color: #555;
+        }
+        /* --- Футър --- */
+        footer {
+            text-align: center;
+            padding: 30px;
+            background: #fff;
+            border-top: 2px solid #d3b373;
+            margin-top: 50px;
+        }
+        /* --- Шевици --- */
+        .side-pattern {
+            position: fixed;
+            top: 0;
+            width: 50px;
+            height: 100%;
+            background: url('12.png') repeat-y;
+            z-index: 500;
+        }
+        .left-pattern { left: 0; }
+        .right-pattern { right: 0; }
+        @media(max-width: 900px) {
+            .side-pattern { display: none; }
+        }
+    </style>
 </head>
 <body>
-  <div class="page">
-    <header>
-      <div class="logo">
-        <img src="logo.png" alt="Лого">
-        Мегданъ
-      </div>
-      <nav>
-        <ul>
-          <li><a href="index.html" class="active">Начало</a></li>
-          <li><a href="about.html">За нас</a></li>
-          <li><a href="classes.html">Курсове</a></li>
-          <li><a href="gallery.html">Галерия</a></li>
-          <li><a href="contact.html">Контакти</a></li>
-        </ul>
-      </nav>
-    </header>
 
     <!-- Шевици -->
-    <div class="sidebar-left"></div>
-    <div class="sidebar-right"></div>
+    <div class="side-pattern left-pattern"></div>
+    <div class="side-pattern right-pattern"></div>
 
+    <!-- Хедър -->
+    <header>
+        <div class="logo">Мегданъ</div>
+        <nav>
+            <a href="#">Начало</a>
+            <a href="#">За нас</a>
+            <a href="#">Курсове</a>
+            <a href="#">Галерия</a>
+            <a href="#">Контакти</a>
+        </nav>
+    </header>
+
+    <!-- Основно съдържание -->
     <main>
-      <!-- Новини -->
-      <section>
-        <h2>Новини</h2>
-        <div class="news-container" id="news"></div>
-      </section>
+        <h1>Добре дошли</h1>
+        <div class="slogan">Място за традиции, култура и общност</div>
 
-      <!-- Галерия -->
-      <section>
-        <h2>Галерия</h2>
-        <div class="gallery" id="gallery"></div>
-      </section>
+        <!-- Слайдер -->
+        <div class="slider" id="slider"></div>
+
+        <!-- Новини -->
+        <div class="news-container" id="news"></div>
     </main>
 
+    <!-- Футър -->
     <footer>
-      <p>&copy; 2025 Мегданъ. Всички права запазени.</p>
+        &copy; 2025 Мегданъ - Всички права запазени
     </footer>
-  </div>
 
-  <script>
-    /** --- Новини от Google Sheets --- **/
-    const sheetURL = "https://docs.google.com/spreadsheets/d/1LiN8HiJO6RNn098M2xwZtea3YjTZrji9GVtoH2x_F_o/gviz/tq?tqx=out:json";
-    const newsEl = document.getElementById("news");
+    <!-- Скриптове -->
+    <script>
+        // --- Слайдер: Google Drive ---
+        const FOLDER_ID = "1ezPV1iwcdYiKgo2fpytQREHw84XVxHpl";
+        const API_KEY   = "AIzaSyC4LnS2joLqzca_d48tKwe240ZtHq-4W-M";
+        const slider = document.getElementById('slider');
 
-    fetch(sheetURL)
-      .then(res => res.text())
-      .then(text => {
-        const json = JSON.parse(text.substr(47).slice(0, -2));
-        const rows = json.table.rows;
-        rows.forEach(row => {
-          const title = row.c[0]?.v || "";
-          const desc  = row.c[1]?.v || "";
-          const img   = row.c[2]?.v || "";
+        fetch(`https://www.googleapis.com/drive/v3/files?q='${FOLDER_ID}'+in+parents&key=${API_KEY}&fields=files(id,name)`)
+            .then(res => res.json())
+            .then(data => {
+                data.files.forEach(file => {
+                    const img = document.createElement('img');
+                    img.src = `https://drive.google.com/uc?export=view&id=${file.id}`;
+                    slider.appendChild(img);
+                });
+            });
 
-          const item = document.createElement("div");
-          item.className = "news-item";
+        // --- Новини: Google Sheets ---
+        const SHEET_ID = "YOUR_SHEET_ID_HERE";
+        const SHEET_API = `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/Sheet1?key=${API_KEY}`;
+        const newsContainer = document.getElementById('news');
 
-          if (img) {
-            const imgEl = new Image();
-            imgEl.src = img.replace("/open?", "/uc?export=view&");
-            item.appendChild(imgEl);
-          }
+        fetch(SHEET_API)
+            .then(res => res.json())
+            .then(data => {
+                const rows = data.values.slice(1); // пропускаме заглавията
+                rows.forEach(row => {
+                    const [title, imgUrl, text] = row;
+                    const card = document.createElement('div');
+                    card.className = 'news-card';
+                    card.innerHTML = `
+                        <img src="${imgUrl.replace("/view?usp=sharing","/uc?export=view")}" alt="${title}">
+                        <h3>${title}</h3>
+                        <p>${text}</p>
+                    `;
+                    newsContainer.appendChild(card);
+                });
+            });
+    </script>
 
-          const textBox = document.createElement("div");
-          textBox.className = "news-text";
-          textBox.innerHTML = `<div class="news-title">${title}</div><div class="news-desc">${desc}</div>`;
-          item.appendChild(textBox);
-
-          newsEl.appendChild(item);
-        });
-      })
-      .catch(err => {
-        console.error(err);
-        newsEl.innerHTML = "<p>Грешка при зареждане на новини.</p>";
-      });
-
-    /** --- Галерия от Google Drive --- **/
-    const FOLDER_ID = "1ezPV1iwcdYiKgo2fpytQREHw84XVxHpl";
-    const API_KEY   = "AIzaSyC4LnS2joLqzca_d48tKwe240ZtHq-4W-M";
-    const galleryEl = document.getElementById('gallery');
-
-    const query  = encodeURIComponent(`'${FOLDER_ID}' in parents and mimeType contains 'image/' and trashed = false`);
-    const fields = encodeURIComponent('files(id,name,mimeType,thumbnailLink)');
-    const url    = `https://www.googleapis.com/drive/v3/files?q=${query}&fields=${fields}&key=${API_KEY}`;
-
-    fetch(url)
-      .then(r => r.json())
-      .then(data => {
-        if (!data.files || !data.files.length) {
-          galleryEl.innerHTML = "<p>Няма снимки в галерията.</p>";
-          return;
-        }
-        data.files.forEach(file => {
-          const primary = `https://www.googleapis.com/drive/v3/files/${file.id}?alt=media&key=${API_KEY}`;
-          const uc      = `https://drive.google.com/uc?export=view&id=${file.id}`;
-          const thumb   = file.thumbnailLink || "";
-
-          const item = document.createElement("div");
-          item.className = "gallery-item";
-
-          const imgEl = new Image();
-          imgEl.src = primary;
-          imgEl.onerror = () => {
-            imgEl.onerror = () => {
-              if (thumb) { imgEl.src = thumb; }
-            };
-            imgEl.src = uc;
-          };
-
-          item.appendChild(imgEl);
-          item.innerHTML += `<p>${file.name.replace(/\.[^/.]+$/, "")}</p>`;
-          galleryEl.appendChild(item);
-        });
-      })
-      .catch(err => {
-        console.error(err);
-        galleryEl.innerHTML = "<p>Грешка при зареждане на галерия.</p>";
-      });
-  </script>
 </body>
 </html>
